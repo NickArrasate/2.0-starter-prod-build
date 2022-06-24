@@ -7,9 +7,15 @@
           "type": "slide",
           "settings": {
             "title": "Slide",
+            "text": "Introduce customers to your shop with lifestyle and product imagery",
             "color": "#ffffff",
+            "link": "",
             "text_alignment": "center",
+            "button_one_label": "Button",
+            "button_one_link": "",
             "button_one_style": "primary",
+            "button_two_label": "",
+            "button_two_link": "",
             "button_two_style": "secondary",
             "show_overlay": true,
             "overlay_color": "#000000",
@@ -20,9 +26,15 @@
           "type": "slide",
           "settings": {
             "title": "Slide",
+            "text": "Introduce customers to your shop with lifestyle and product imagery",
             "color": "#1d1d1d",
+            "link": "",
             "text_alignment": "left",
+            "button_one_label": "Button",
+            "button_one_link": "",
             "button_one_style": "primary",
+            "button_two_label": "",
+            "button_two_link": "",
             "button_two_style": "primary",
             "show_overlay": true,
             "overlay_color": "#000000",
@@ -33,9 +45,15 @@
           "type": "slide",
           "settings": {
             "title": "Slide",
+            "text": "Introduce customers to your shop with lifestyle and product imagery",
             "color": "#ffffff",
+            "link": "",
             "text_alignment": "center",
+            "button_one_label": "Button",
+            "button_one_link": "",
             "button_one_style": "primary",
+            "button_two_label": "",
+            "button_two_link": "",
             "button_two_style": "secondary",
             "show_overlay": true,
             "overlay_color": "#000000",
@@ -46,9 +64,15 @@
           "type": "slide",
           "settings": {
             "title": "Slide",
+            "text": "Introduce customers to your shop with lifestyle and product imagery",
             "color": "#1d1d1d",
+            "link": "",
             "text_alignment": "left",
+            "button_one_label": "Button",
+            "button_one_link": "",
             "button_one_style": "primary",
+            "button_two_label": "",
+            "button_two_link": "",
             "button_two_style": "secondary",
             "show_overlay": true,
             "overlay_color": "#000000",
@@ -79,15 +103,17 @@
           "settings": {
             "icon": "icon-delivery",
             "title": "Free Shipping",
-            "text": "<p>When you spend $100+<\/p>"
+            "text": "<p>When you spend $100+<\/p>",
+            "link": ""
           }
         },
         "highlight-2": {
           "type": "highlight",
           "settings": {
             "icon": "icon-cell-phone",
-            "title": "Give Us A Call",
-            "text": "<p>+1 (201) 555-5555<\/p>"
+            "title": "Armadillo!",
+            "text": "<p>+1 (201) 555-5555<\/p>",
+            "link": ""
           }
         },
         "highlight-3": {
@@ -95,7 +121,8 @@
           "settings": {
             "icon": "icon-chat-alternate",
             "title": "Chat With Us",
-            "text": "<p>We offer 24-hour chat support<\/p>"
+            "text": "<p>We offer 24-hour chat support<\/p>",
+            "link": ""
           }
         },
         "highlight-4": {
@@ -103,7 +130,8 @@
           "settings": {
             "icon": "icon-pin",
             "title": "Locations",
-            "text": "<p>Find a store near you<\/p>"
+            "text": "<p>Find a store near you<\/p>",
+            "link": ""
           }
         }
       },
@@ -129,7 +157,11 @@
         "promotion-1": {
           "type": "promotion",
           "settings": {
+            "title": "Mosaic",
+            "text": "Use this section to welcome customers to your store, say a bit about your brand, or share news.",
             "color": "#ffffff",
+            "block_link": "",
+            "button_text": "",
             "button_style": "primary",
             "show_overlay": false,
             "background": "rgba(0,0,0,0)",
@@ -139,7 +171,11 @@
         "promotion-2": {
           "type": "promotion",
           "settings": {
+            "title": "Mosaic",
+            "text": "Use this section to welcome customers to your store, say a bit about your brand, or share news.",
             "color": "#ffffff",
+            "block_link": "",
+            "button_text": "",
             "button_style": "primary",
             "show_overlay": true,
             "background": "#000000",
@@ -149,7 +185,11 @@
         "promotion-3": {
           "type": "promotion",
           "settings": {
+            "title": "Mosaic",
+            "text": "Use this section to welcome customers to your store, say a bit about your brand, or share news.",
             "color": "#ffffff",
+            "block_link": "",
+            "button_text": "",
             "button_style": "primary",
             "show_overlay": true,
             "background": "#000000",
@@ -159,7 +199,11 @@
         "promotion-4": {
           "type": "promotion",
           "settings": {
+            "title": "Mosaic",
+            "text": "Use this section to welcome customers to your store, say a bit about your brand, or share news.",
             "color": "#ffffff",
+            "block_link": "",
+            "button_text": "",
             "button_style": "primary",
             "show_overlay": false,
             "background": "",
@@ -187,6 +231,12 @@
         "view-all-card": {
           "type": "view_all_card",
           "settings": {
+            "text_alignment": "center-center",
+            "pre_heading": "View all",
+            "heading": "Collection",
+            "text_color": "#FFFFFF",
+            "overlay_color": "#000000",
+            "overlay_opacity": 50
           }
         }
       },
@@ -196,6 +246,7 @@
       "settings": {
         "title": "",
         "layout": "slideshow",
+        "collection": "",
         "product_count": 9,
         "cta_label": "",
         "cta_button_style": "primary"
@@ -217,6 +268,7 @@
         "view-product-link": {
           "type": "view-product-link",
           "settings": {
+            "text": "View full details"
           }
         }
       },
@@ -226,6 +278,7 @@
         "view-product-link"
       ],
       "settings": {
+        "product": "",
         "gallery_aspect_ratio": "natural",
         "gallery_image_crop": false,
         "gallery_thumbnail_position": "left",
@@ -241,7 +294,11 @@
           "type": "promotion",
           "settings": {
             "background_position": "center-center",
+            "title": "Grid",
+            "text": "Use this section to welcome customers to your store, say a bit about your brand, or share news.",
             "color": "#ffffff",
+            "block_link": "",
+            "button_text": "",
             "button_style": "primary",
             "show_overlay": false,
             "background": "",
@@ -252,7 +309,11 @@
           "type": "promotion",
           "settings": {
             "background_position": "center-center",
+            "title": "Grid",
+            "text": "Use this section to welcome customers to your store, say a bit about your brand, or share news.",
             "color": "#ffffff",
+            "block_link": "",
+            "button_text": "",
             "button_style": "primary",
             "show_overlay": false,
             "background": "",
@@ -263,7 +324,11 @@
           "type": "promotion",
           "settings": {
             "background_position": "center-left",
+            "title": "Grid",
+            "text": "Use this section to welcome customers to your store, say a bit about your brand, or share news.",
             "color": "#ffffff",
+            "block_link": "",
+            "button_text": "",
             "button_style": "primary",
             "show_overlay": false,
             "background": "",
@@ -274,7 +339,11 @@
           "type": "promotion",
           "settings": {
             "background_position": "center-left",
+            "title": "Grid",
+            "text": "Use this section to welcome customers to your store, say a bit about your brand, or share news.",
             "color": "#ffffff",
+            "block_link": "",
+            "button_text": "",
             "button_style": "primary",
             "show_overlay": false,
             "background": "",
@@ -289,6 +358,7 @@
         "promotion-4"
       ],
       "settings": {
+        "title": "Grid",
         "section_height": "medium",
         "section_columns": 4,
         "text_alignment": "top-left"
@@ -300,31 +370,43 @@
         "collection-1": {
           "type": "collection",
           "settings": {
+            "collection": "",
+            "title": ""
           }
         },
         "collection-2": {
           "type": "collection",
           "settings": {
+            "collection": "",
+            "title": ""
           }
         },
         "collection-3": {
           "type": "collection",
           "settings": {
+            "collection": "",
+            "title": ""
           }
         },
         "collection-4": {
           "type": "collection",
           "settings": {
+            "collection": "",
+            "title": ""
           }
         },
         "collection-5": {
           "type": "collection",
           "settings": {
+            "collection": "",
+            "title": ""
           }
         },
         "collection-6": {
           "type": "collection",
           "settings": {
+            "collection": "",
+            "title": ""
           }
         }
       },
@@ -337,8 +419,12 @@
         "collection-6"
       ],
       "settings": {
+        "title": "Collection list",
         "thumbnail_columns_desktop": 6,
         "thumbnail_columns_mobile": 3,
+        "image-crop": "original",
+        "cta_label": "View All",
+        "cta_link": "",
         "cta_button_style": "secondary"
       }
     },
@@ -348,6 +434,7 @@
         "hotspot-1": {
           "type": "hotspot",
           "settings": {
+            "product": "",
             "x_axis": 24,
             "y_axis": 79
           }
@@ -355,6 +442,7 @@
         "hotspot-2": {
           "type": "hotspot",
           "settings": {
+            "product": "",
             "x_axis": 64,
             "y_axis": 67
           }
@@ -362,6 +450,7 @@
         "hotspot-3": {
           "type": "hotspot",
           "settings": {
+            "product": "",
             "x_axis": 61,
             "y_axis": 5
           }
@@ -369,6 +458,7 @@
         "hotspot-4": {
           "type": "hotspot",
           "settings": {
+            "product": "",
             "x_axis": 15,
             "y_axis": 19
           }
@@ -376,6 +466,7 @@
         "hotspot-5": {
           "type": "hotspot",
           "settings": {
+            "product": "",
             "x_axis": 87,
             "y_axis": 48
           }
@@ -389,7 +480,13 @@
         "hotspot-5"
       ],
       "settings": {
+        "title": "Shoppable image",
         "image_width": "two-thirds",
+        "link_text": "View product",
+        "textbox_title": "Shop the look",
+        "textbox_subheading": "<p>Make an image shoppable by adding hotspots that link to various products.<\/p>",
+        "textbox_button_label": "Button",
+        "textbox_button_link": "",
         "textbox_button_style": "primary",
         "textbox_text_alignment": "center",
         "textbox_text_position": "left"
@@ -404,7 +501,10 @@
             "horizontal_size": "3",
             "vertical_size": "2",
             "text_alignment": "center-center",
+            "pre_heading": "Featured",
+            "heading": "Collection",
             "text_color": "#ffffff",
+            "cta_label": "See more",
             "overlay_color": "#000000",
             "overlay_opacity": 10
           }
@@ -414,7 +514,9 @@
         "title-card"
       ],
       "settings": {
+        "title": "Featured collection",
         "layout": "grid",
+        "collection": "",
         "product_count": 4,
         "cta_label": "",
         "cta_button_style": "primary"
@@ -427,7 +529,11 @@
           "type": "promotion",
           "settings": {
             "background_position": "center-center",
+            "title": "Grid",
+            "text": "Use this section to welcome customers to your store, say a bit about your brand, or share news.",
             "color": "#ffffff",
+            "block_link": "",
+            "button_text": "",
             "button_style": "secondary",
             "show_overlay": false,
             "background": "rgba(0,0,0,0)",
@@ -438,7 +544,11 @@
           "type": "promotion",
           "settings": {
             "background_position": "center-center",
+            "title": "Grid",
+            "text": "Use this section to welcome customers to your store, say a bit about your brand, or share news.",
             "color": "#ffffff",
+            "block_link": "",
+            "button_text": "",
             "button_style": "primary",
             "show_overlay": false,
             "background": "rgba(0,0,0,0)",
@@ -464,7 +574,11 @@
           "type": "promotion",
           "settings": {
             "background_position": "center-center",
+            "title": "Grid",
+            "text": "Use this section to welcome customers to your store, say a bit about your brand, or share news.",
             "color": "#1e1e1e",
+            "block_link": "",
+            "button_text": "",
             "button_style": "primary",
             "show_overlay": false,
             "background": "",
@@ -476,6 +590,7 @@
         "promotion-1"
       ],
       "settings": {
+        "title": "Grid",
         "section_height": "medium",
         "section_columns": 1,
         "text_alignment": "center-left"
@@ -487,31 +602,49 @@
         "testimonial-1": {
           "type": "testimonial",
           "settings": {
+            "star_rating": "4.5",
+            "text": "<p>Add customer reviews and testimonials to showcase your store's happy customers.<\/p>",
+            "author": "<p>Author's name<\/p>"
           }
         },
         "testimonial-2": {
           "type": "testimonial",
           "settings": {
+            "star_rating": "4.5",
+            "text": "<p>Add customer reviews and testimonials to showcase your store's happy customers.<\/p>",
+            "author": "<p>Author's name<\/p>"
           }
         },
         "testimonial-3": {
           "type": "testimonial",
           "settings": {
+            "star_rating": "4.5",
+            "text": "<p>Add customer reviews and testimonials to showcase your store's happy customers.<\/p>",
+            "author": "<p>Author's name<\/p>"
           }
         },
         "testimonial-4": {
           "type": "testimonial",
           "settings": {
+            "star_rating": "4.5",
+            "text": "<p>Add customer reviews and testimonials to showcase your store's happy customers.<\/p>",
+            "author": "<p>Author's name<\/p>"
           }
         },
         "testimonial-5": {
           "type": "testimonial",
           "settings": {
+            "star_rating": "4.5",
+            "text": "<p>Add customer reviews and testimonials to showcase your store's happy customers.<\/p>",
+            "author": "<p>Author's name<\/p>"
           }
         },
         "testimonial-6": {
           "type": "testimonial",
           "settings": {
+            "star_rating": "4.5",
+            "text": "<p>Add customer reviews and testimonials to showcase your store's happy customers.<\/p>",
+            "author": "<p>Author's name<\/p>"
           }
         }
       },
@@ -524,6 +657,7 @@
         "testimonial-6"
       ],
       "settings": {
+        "title": "Testimonials",
         "image_crop": "circle",
         "text_size": "large"
       }
@@ -531,6 +665,8 @@
     "dynamic_blog_posts": {
       "type": "dynamic-blog-posts",
       "settings": {
+        "title": "Blog posts",
+        "blog": "",
         "show_date": true,
         "show_author": false,
         "show_excerpt": true
@@ -539,6 +675,9 @@
     "dynamic_search": {
       "type": "dynamic-search",
       "settings": {
+        "title": "Search",
+        "text": "Use this section to help customers find the products they're looking for.",
+        "placeholder": "What are you looking for?",
         "filter_search_by": "disabled",
         "enable_live_search": true,
         "enable_live_search_images": false,
