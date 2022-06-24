@@ -111,7 +111,7 @@
           "type": "highlight",
           "settings": {
             "icon": "icon-cell-phone",
-            "title": "Armadillo! Oh Yeah!",
+            "title": "Armadillo! Oh Yeah! One more time",
             "text": "<p>+1 (201) 555-5555<\/p>",
             "link": ""
           }
@@ -234,7 +234,7 @@
             "text_alignment": "center-center",
             "pre_heading": "View all",
             "heading": "Collection",
-            "text_color": "#FFFFFF",
+            "text_color": "#ffffff",
             "overlay_color": "#000000",
             "overlay_opacity": 50
           }
