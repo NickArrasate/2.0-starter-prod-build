@@ -111,7 +111,11 @@
           "type": "highlight",
           "settings": {
             "icon": "icon-cell-phone",
+<<<<<<< HEAD
             "title": "Armadillo! Oh Yeah! One more time! change again",
+=======
+            "title": "Panda",
+>>>>>>> c11767a0132d615f4142885c6e4253dffda54b54
             "text": "<p>+1 (201) 555-5555<\/p>",
             "link": ""
           }
