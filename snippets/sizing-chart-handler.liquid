@@ -1,0 +1,33 @@
+{% if mens and bottoms %}
+{% render 'sizing-chart-mens-bottoms' %}
+{% endif %}
+
+{% if womens and bottoms and swim %}
+{% render 'sizing-chart-womens-swim' %}
+{% elsif womens and swim %}
+{% render 'sizing-chart-womens-swim' %}
+{% elsif womens and bottoms %}
+{% render 'sizing-chart-womens-bottoms' %}
+{% endif %}
+
+{% if womens and leggings %}
+{% unless swim %}
+{% render 'sizing-chart-womens-bottoms' %}
+{% endunless %}
+{% endif %}
+
+{% if mens and socks %}
+{% render 'sizing-chart-mens-socks' %}
+{% endif %}
+
+{% if womens and socks %}
+{% render 'sizing-chart-womens-socks' %}
+{% endif %}
+
+{% if unisex and tops %}
+{% render 'sizing-chart-unisex-tops' %}
+{% endif %}
+
+{% if hats %}
+{% render 'sizing-chart-one-size' %}
+{% endif %}

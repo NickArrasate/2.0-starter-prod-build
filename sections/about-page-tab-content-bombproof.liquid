@@ -1,0 +1,246 @@
+<script
+  type="application/json"
+  data-section-type="dynamic-video"
+  data-section-id="{{ section.id }}"
+  data-section-data>
+  {
+    "autoplay": {{ section.settings.autoplay | json }}
+  }
+</script>
+<div id="{{section.settings.id}}" class="">
+  <a name="{{section.settings.id}}"></a>
+<div class="page-width">
+  {% for block in section.blocks %}
+  {%- capture leftright -%}
+  {%- cycle 'left', 'right' -%}
+  {%- endcapture -%}
+  <div class="row about-section-row">
+  {% capture image_box %}
+  {% assign image_size = '1500x' %}
+  <div  class="col-md-8 text-{%- cycle 'right', 'left' -%}">
+    {% if block.settings.url %}
+    {% assign url = null %}
+    {% assign url = block.settings.url %}
+        <div class="">
+          <div class="dynamic-video">
+            {% assign overlay = null %}
+            {% if section.settings.show_overlay %}
+              {% assign opacity = section.settings.opacity | times: 0.01 %}
+              {% assign overlay = section.settings.background | color_modify: 'alpha', opacity %}
+            {% endif %}
+
+            {%
+              render 'video',
+              cover: block.settings.cover,
+              aspect_ratio: section.settings.aspect_ratio,
+              overlay: overlay,
+              url: url
+            %}
+          {% if block.settings.show_caption %}
+            <div class="dynamic-video-caption rte">{{ section.settings.caption }}</div>
+          {% endif %}
+        </div>
+      </div>
+    {% elsif block.settings.image %}
+      <img style="max-width: 100%" src="{{ block.settings.image | img_url: '600x600' }}">
+    {% endif %}
+  </div>
+  {% endcapture %}
+      {% if leftright == 'left' %}
+      {{ image_box }}
+      {% endif %}
+      <div class="col-md-4">
+        {% if block.settings.title != blank %}
+        <div class="collection--title emphasized-title-container {% if leftright == 'right' %}right{% else %}left{% endif %}">
+          <h1 class="section-header text-{% if leftright == 'right' %}right{% else %}left{% endif %} emphasized-title">{{ block.settings.title }}</h1>
+        </div>
+        {% endif %}
+      <p class="text-{% if leftright == 'right' %}right{% else %}left{% endif %}">{{ block.settings.text_content }}</p>
+      <div class="row">
+        <div class="col-12">
+          {% if block.settings.cta_link %}
+          <div>
+            <span class="link-block__cta">
+            <a class="button button-{{block.settings.cta_type}}" href="{{block.settings.cta_link}}">
+              {{ block.settings.cta_label }}
+              </a>
+            </span>
+          </div>
+          {% endif %}
+          {% if block.settings.cta_link-2 %}
+          <div class="">
+            <span class="link-block__cta">
+              <a class="button button-{{block.settings.cta_type-2}}" href="{{block.settings.cta_link-2}}">
+              {{ block.settings.cta_label-2 }}
+              </a>
+            </span>
+          </div>
+          {% endif %}
+          </div>
+      </div>
+    </div>
+      {% if leftright == 'right' %}
+      {{ image_box }}
+      {% endif %}
+  </div>
+  {% endfor %}
+</div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "About page bombproof",
+    "class": "index-section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "id",
+        "label": "Nav Target ID",
+        "default": "warranty",
+        "info": "should match the desired nav item"
+      },
+      {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Autoplay videos"
+      },
+      {
+        "type": "select",
+        "id": "aspect_ratio",
+        "label": "Aspect ratio",
+        "options": [
+          {
+            "label": "16:9",
+            "value": "16-9"
+          },
+          {
+            "label": "21:9",
+            "value": "21-9"
+          }
+        ]
+      },
+      {
+        "type": "color",
+        "id": "background",
+        "label": "Color",
+        "default": "#000000"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Content block",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "section heading",
+            "default": "USA Made"
+          },
+          {
+            "type": "richtext",
+            "id": "text_content",
+            "label": "Text Content",
+            "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>"
+          },
+          {
+            "type": "video_url",
+            "id": "url",
+            "label": "Fallback Video Link",
+            "accept": ["youtube", "vimeo"],
+            "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_caption",
+            "label": "Show Caption"
+          },
+          {
+            "type": "richtext",
+            "id": "caption",
+            "label": "Caption",
+            "default": "<p>A short description of the video.</p>"
+          },
+          {
+            "type": "image_picker",
+            "id": "cover",
+            "label": "Cover image"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Section Image"
+          },
+          {
+            "type": "text",
+            "id": "cta_label",
+            "label": "CTA Text",
+            "default": "Learn More"
+          },
+          {
+            "type": "url",
+            "id": "cta_link",
+            "label": "CTA Link"
+          },
+          {
+            "type": "radio",
+            "id": "cta_type",
+            "label": "Button Type",
+            "options": [
+                {
+                  "value": "secondary",
+                  "label": "Secondary"
+                },
+                {
+                  "value": "outline",
+                  "label": "Outline"
+                }
+              ],
+              "default": "secondary"
+          },
+          {
+            "type": "text",
+            "id": "cta_label-2",
+            "label": "CTA 2 Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_link-2",
+            "label": "CTA 2 Link"
+          },
+          {
+            "type": "radio",
+            "id": "cta_type-2",
+            "label": "Button 2 Type",
+            "options": [
+                {
+                  "value": "secondary",
+                  "label": "Secondary"
+                },
+                {
+                  "value": "outline",
+                  "label": "Outline"
+                }
+              ],
+              "default": "outline"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": {
+          "pt-BR": "Blocos de links múltiplos",
+          "it": "Più gruppi di link",
+          "en": "Multiple link blocks",
+          "es": "Enlaces múltiples",
+          "de": "Mehrere Linkblöcke",
+          "ja": "複数のリンクのブロック",
+          "fr": "Blocs de liens multiples"
+        },
+        "category": "Content"
+        }
+      ]
+      }
+{% endschema %}

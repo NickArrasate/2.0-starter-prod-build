@@ -1,0 +1,99 @@
+{% if section.blocks != blank %}
+<div class="">
+  {% for block in section.blocks %}
+    <div class="row">
+      {% capture image_box %}
+      <div class="col-5 col-sm-5 text-center">
+        {% if block.settings.image %}
+        <img style="max-width: 100%; max-height: 300px;" src="{{ block.settings.image | img_url: '600x600' }}">
+        {% endif %}
+      </div>
+      {% endcapture %}
+      {{ image_box }}
+      <div class="col-7 col-sm-7" style="min-height:300px;">
+        <div class="alt-block-text-box">
+          {% if block.settings.title != blank %}
+          <div class="text-left" style="background-color:#ffffff;">
+            <h3 style="margin-bottom: 10px;" class="block-header text-left">{{ block.settings.title }}</h3>
+          </div>
+          {% endif %}
+          {% if block.settings.subtitle != blank %}
+          <div class="collection--subtitle text-left" style="background-color:#ffffff;">
+            <h4 style="margin-top: 0;" class="text-left">{{ block.settings.subtitle }}</h4>
+          </div>
+          {% endif %}
+          <div class="text-left">{{ block.settings.text_content }}</div>
+          <div class="row text-left">
+            <div class="col-12">
+              {% if block.settings.cta_link %}
+              <div class="">
+                <span class="link-block__cta">
+                  <a class="" href="{{block.settings.cta_link}}">
+                    {{ block.settings.cta_label }}
+                  </a>
+                </span>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+{% schema %}
+{
+  "name": "Events",
+  "class": "section-video",
+  "blocks": [
+  {
+    "type": "event",
+    "name": "Event Name",
+    "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Date Could Go Here"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Event Name Could Go Here"
+        },
+        {
+          "type": "textarea",
+          "id": "text_content",
+          "label": "Description"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "CTA Link"
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "CTA Label",
+          "default": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Video",
+      "name": "Events"
+    }
+  ]
+}
+
+{% endschema %}

@@ -1,0 +1,56 @@
+{% assign onboarding = true %}
+
+{% if section.settings.access_token != blank %}
+  {% assign onboarding = false %}
+{% endif %}
+
+{% assign photo_count = 5 %}
+
+<script
+  type="application/json"
+  data-section-id="{{ section.id }}"
+  data-section-type="dynamic-instagram-feed"
+  data-section-data>
+  {
+    "onboarding": {{ onboarding | json }},
+    "photo_count": {{ photo_count }},
+    "access_token": {{ section.settings.access_token | escape | json }}
+  }
+</script>
+
+<section class="instagram--container">
+  {% if section.settings.title != blank %}
+    <h2 class="home-section--title">
+      {{ section.settings.title | escape }}
+    </h2>
+  {% endif %}
+
+  <div
+    class="home-section--content instagram--inner"
+    data-instagram-content
+  >
+  <div class="elfsight-sapp-87e7add0-dfbb-11e9-a39b-0deb9a6eb5e5"></div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Instagram",
+  "class": "instagram--section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "@ICELANTIC_SKIS"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Insta feed",
+      "category": "Social media"
+    }
+  ]
+}
+
+{% endschema %}

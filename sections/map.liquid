@@ -1,0 +1,394 @@
+{% assign display_map = false %}
+{%- if section.settings.api_key != blank and section.settings.map_address -%}
+  {% assign display_map = true %}
+{%- endif -%}
+
+<style>
+  #map-section__image--{{ section.id }} {
+    background-position: {{ section.settings.position }};
+  }
+  @media screen and (max-width: 768px) {
+    #map-section__image--{{ section.id }} {
+      {% unless section.settings.image == blank %}
+        padding-top: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100}}%;
+      {% endunless %}
+    }
+  }
+</style>
+
+<div class="map-section{% if display_map %} map-section--display-map{% endif %}" data-section-id="{{ section.id }}" data-section-type="map" data-api-key="{{ section.settings.api_key }}">
+  <div class="page-width map-section__wrapper">
+    <div class="map-section__content-wrapper">
+      <div class="map-section__overlay">
+        {% if section.settings.map_title != blank %}
+          <h4 class="h1--mini">{{ section.settings.map_title | escape }}</h4>
+        {% endif %}
+        {% if section.settings.address != blank %}
+          <div class="rte-setting">{{ section.settings.address }}</div>
+          {% if section.settings.button != blank and section.settings.map_address != blank %}
+            <p><a class="btn" href="https://maps.google.com?daddr={{ section.settings.map_address | escape }}" target="_blank">
+              {% if section.settings.show_pin %}
+                <span class="icon-pin" aria-hidden="true">{% render 'icon-pin' %}</span>
+              {% endif %}
+              {{ section.settings.button | escape }}
+            </a></p>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    <div class="map-section__background-wrapper">
+      {% if section.settings.image %}
+        <div id="map-section__image--{{ section.id }}" class="map-section__image lazyload"
+            data-bgset="{% render 'bgset', image: section.settings.image %}"
+            data-sizes="auto"
+            data-parent-fit="cover"
+           style="background-image: url('{{ section.settings.image | img_url: '300x300' }});">
+        </div>
+        <noscript>
+          <div id="map-section__image--{{ section.id }}" class="map-section__image" style="background-image: url({{ section.settings.image | img_url: 'x800', crop: 'top' }});"></div>
+        </noscript>
+      {% else %}
+        <div class="map-section__image">
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {% endif %}
+      {% if display_map %}
+        <div class="map-section__container"
+             id="Map-{{ section.id }}"
+             data-address-setting="{{ section.settings.map_address | escape }}"
+             data-marker-color="{{ settings.color_button_bg }}">
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": {
+      "pt-BR": "Mapa",
+      "it": "Mappa",
+      "en": "Map",
+      "es": "Mapa",
+      "de": "Karte",
+      "ja": "マップ",
+      "fr": "Carte"
+    },
+    "class": "index-section index-section--flush",
+    "settings": [
+      {
+        "id": "map_title",
+        "type": "text",
+        "label": {
+          "pt-BR": "Título",
+          "it": "Heading",
+          "en": "Heading",
+          "es": "Título",
+          "de": "Titel",
+          "ja": "見出し",
+          "fr": "Titre"
+        },
+        "default": {
+          "pt-BR": "Nossa loja",
+          "it": "Il nostro negozio",
+          "en": "Our store",
+          "es": "Nuestra tienda",
+          "de": "Unser Laden",
+          "ja": "私たちのストア",
+          "fr": "Notre boutique"
+        }
+      },
+      {
+        "id": "address",
+        "type": "richtext",
+        "label": {
+          "pt-BR": "Endereço e horas",
+          "it": "Indirizzo e orari",
+          "en": "Address and hours",
+          "es": "Dirección y horario",
+          "de": "Adresse und Öffnungszeiten",
+          "ja": "住所と営業時間",
+          "fr": "Adresse et heures d'ouverture"
+        },
+        "default": {
+          "pt-BR": "<p>123 Fake St. <br> Toronto, Canadá</p><p>Seg. - Sex., 10h - 21h <br> Sábado, 11h às 21h <br> Domingo, 11h às 17h</p>",
+          "it": "<p>123 Fake St.<br>Toronto, Canada</p><p>Lun-Ven, 10:00 - 21:00<br>Sabato, 11:00 - 21:00<br>Domenica, 11:00 - 17:00</p>",
+          "en": "<p>123 Fake St.<br>Toronto, Canada</p><p>Mon - Fri, 10am - 9pm<br>Saturday, 11am - 9pm<br>Sunday, 11am - 5pm</p>",
+          "es": "<p>123 Fake St. <br> Toronto, Canadá</p><p>Mon - Vie, 10 a.m. - 9 p.m. <br> Sábados, de 11:00am a 09:00pm <br> Domingo, de 11:00am a 05:00pm</p>",
+          "de": "<p>Musterstraße 123<br>12345 Musterstadt</p><p>Mo - Fr, 10 - 21 Uhr<br>Samstag, 11 - 21 Uhr<br>Sonntag, Ruhetag</p>",
+          "ja": "<p>123 Fake St.<br>Toronto, Canada</p><p>月曜日～金曜日、午前10時〜午後9時<br>土曜日、午前11時〜午後9時<br>日曜日、午前11時〜午後5時</p>",
+          "fr": "<p>123 rue inventée<br>Paris, France</p><p>Lun. - ven., 10 h - 21 h<br>Samedi, 11 h - 21 h<br>Dimanche, 11 h - 17 h</p>"
+        }
+      },
+      {
+        "id": "map_address",
+        "type": "text",
+        "label": {
+          "pt-BR": "Endereço no mapa",
+          "it": "Indirizzo su mappa",
+          "en": "Map address",
+          "es": "Dirección del mapa",
+          "de": "Adresse",
+          "ja": "マップアドレス",
+          "fr": "Adresse sur la carte"
+        },
+        "info": {
+          "pt-BR": "O Google Maps encontrará a localização exata",
+          "it": "Google Maps troverà l'esatta posizione",
+          "en": "Google Maps will find the exact location",
+          "es": "Google Maps encontrará la ubicación exacta",
+          "de": "Google Maps findet die richtige Adresse",
+          "ja": "Googleマップが正確な位置を見つけます。",
+          "fr": "Google Maps trouvera l'adresse exacte"
+        },
+        "default": {
+          "pt-BR": "80 Spadina Ave, Toronto",
+          "it": "80 Spadina Ave, Toronto",
+          "en": "80 Spadina Ave, Toronto",
+          "es": "80 Spadina Ave, Toronto",
+          "de": "80 Spadina Ave, Toronto",
+          "ja": "80 Spadina Ave, Toronto",
+          "fr": "80 Spadina Ave, Toronto"
+        }
+      },
+      {
+        "type": "text",
+        "id": "button",
+        "label": {
+          "pt-BR": "Etiqueta de link do mapa",
+          "it": "Etichetta del link alla mappa",
+          "en": "Map link label",
+          "es": "Etiqueta de enlace de mapa",
+          "de": "Link auf der Karte",
+          "ja": "マップリンクラベル",
+          "fr": "Texte du lien de la carte"
+        },
+        "default": {
+          "pt-BR": "Direções",
+          "it": "Direzioni",
+          "en": "Directions",
+          "es": "Indicaciones",
+          "de": "Wegbeschreibung",
+          "ja": "道順",
+          "fr": "Itinéraire"
+        }
+      },
+      {
+        "id": "show_pin",
+        "type": "checkbox",
+        "label": {
+          "pt-BR": "Exibir pin",
+          "it": "Mostra pin",
+          "en": "Show pin",
+          "es": "Ver pin",
+          "de": "Pin anzeigen",
+          "ja": "ピンを表示する",
+          "fr": "Afficher l'épingle"
+        },
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": {
+          "pt-BR": "Plano de fundo",
+          "it": "Sfondo",
+          "en": "Background",
+          "es": "Fondo",
+          "de": "Hintergrund",
+          "ja": "背景",
+          "fr": "Arrière-plan"
+        }
+      },
+      {
+        "id": "api_key",
+        "type": "text",
+        "label": {
+          "pt-BR": "Chave da API do Google Maps",
+          "it": "Chiave API di Google Maps",
+          "en": "Google Maps API key",
+          "es": "Registrar una clave API de Google Maps",
+          "de": "Google Maps API Key",
+          "ja": "GoogleマップのAPIキー",
+          "fr": "Clé d'API Google Maps"
+        },
+        "info": {
+          "pt-BR": "Você vai precisar [registrar uma chave de API do Google Maps](https://help.shopify.com/manual/using-themes/troubleshooting/map-section-api-key) para exibir o mapa",
+          "it": "Dovrai [registrare una chiave API di Google Maps](https://help.shopify.com/manual/using-themes/troubleshooting/map-section-api-key) per visualizzare la mappa",
+          "en": "You’ll need to [register a Google Maps API Key](https://help.shopify.com/manual/using-themes/troubleshooting/map-section-api-key) to display the map",
+          "es": "Debes [registrar una clave de API de Google Maps](https://help.shopify.com/manual/using-themes/troubleshooting/map-section-api-key) para mostrar el mapa",
+          "de": "Sie müssen [einen Google Maps API Key registrieren](https://help.shopify.com/manual/using-themes/troubleshooting/map-section-api-key) zum Anzeigen der Karte",
+          "ja": "[GoogleマップのAPIキーを登録する]必要があります（https://help.shopify.com/manual/using-themes/troubleshooting/map-section-api-key）マップを表示するには",
+          "fr": "Vous devez obtenir une [clé d'API pour Google Maps](https://help.shopify.com/manual/using-themes/troubleshooting/map-section-api-key)"
+        }
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": {
+          "pt-BR": "Imagem",
+          "it": "Immagine",
+          "en": "Image",
+          "es": "Imagen",
+          "de": "Foto",
+          "ja": "画像",
+          "fr": "Image"
+        },
+        "info": {
+          "pt-BR": "Exibido se o mapa não for carregado",
+          "it": "Visualizzato se la mappa non è caricata",
+          "en": "Displayed if the map isn’t loaded",
+          "es": "Aparece si el mapa no está cargado",
+          "de": "Anzeigen, wenn Karte nicht lädt",
+          "ja": "マップが読み込まれない場合に表示されます",
+          "fr": "Affichée si la carte ne charge pas"
+        }
+      },
+      {
+        "type": "select",
+        "id": "position",
+        "label": {
+          "pt-BR": "Posição da imagem",
+          "it": "Posizione Immagine",
+          "en": "Image position",
+          "es": "Posición de la imagen",
+          "de": "Foto-Position",
+          "ja": "画像の位置",
+          "fr": "Position de l'image"
+        },
+        "default": "center center",
+        "options": [
+          {
+            "label": {
+              "pt-BR": "Superior esquerdo",
+              "it": "In alto a sinistra",
+              "en": "Top left",
+              "es": "Superior izquierda",
+              "de": "Oben links",
+              "ja": "左上",
+              "fr": "En haut à gauche"
+            },
+            "value": "top left"
+          },
+          {
+            "label": {
+              "pt-BR": "Superior centro",
+              "it": "In alto al centro",
+              "en": "Top center",
+              "es": "Superior al centro",
+              "de": "Oben Mitte",
+              "ja": "中央上",
+              "fr": "En haut au centre"
+            },
+            "value": "top center"
+          },
+          {
+            "label": {
+              "pt-BR": "Superior direito",
+              "it": "In alto a destra",
+              "en": "Top right",
+              "es": "Superior derecha",
+              "de": "Oben rechts",
+              "ja": "右上",
+              "fr": "En haut à droite"
+            },
+            "value": "top right"
+          },
+          {
+            "label": {
+              "pt-BR": "Meio esquerdo",
+              "it": "In mezzo a sinistra",
+              "en": "Middle left",
+              "es": "Al medio a la izquierda",
+              "de": "Mitte links",
+              "ja": "中央左",
+              "fr": "Au milieu à gauche"
+            },
+            "value": "center left"
+          },
+          {
+            "label": {
+              "pt-BR": "Meio centro",
+              "it": "In mezzo al centro",
+              "en": "Middle center",
+              "es": "Al medio al centro",
+              "de": "Mitte mittig",
+              "ja": "中央中",
+              "fr": "Centrée au milieu"
+            },
+            "value": "center center"
+          },
+          {
+            "label": {
+              "pt-BR": "Meio direito",
+              "it": "In centro a destra",
+              "en": "Middle right",
+              "es": "Al medio a la derecha",
+              "de": "Mitte rechts",
+              "ja": "中央右",
+              "fr": "Au milieu à droite"
+            },
+            "value": "center right"
+          },
+          {
+            "label": {
+              "pt-BR": "Inferior esquerdo",
+              "it": "In basso a sinistra",
+              "en": "Bottom left",
+              "es": "Inferior izquierda",
+              "de": "Unten links",
+              "ja": "左下",
+              "fr": "En bas à gauche"
+            },
+            "value": "bottom left"
+          },
+          {
+            "label": {
+              "pt-BR": "Inferior centro",
+              "it": "In basso al centro",
+              "en": "Bottom center",
+              "es": "Inferior al centro",
+              "de": "Unten mittig",
+              "ja": "中央下",
+              "fr": "En bas au centre"
+            },
+            "value": "bottom center"
+          },
+          {
+            "label": {
+              "pt-BR": "Inferior direito",
+              "it": "In basso a destra",
+              "en": "Bottom right",
+              "es": "Inferior derecha",
+              "de": "Unten rechts",
+              "ja": "右下",
+              "fr": "En bas à droite"
+            },
+            "value": "bottom right"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": {
+          "pt-BR": "Mapa",
+          "it": "Mappa",
+          "en": "Map",
+          "es": "Mapa",
+          "de": "Karte",
+          "ja": "マップ",
+          "fr": "Carte"
+        },
+        "category": {
+          "pt-BR": "Informações sobre a loja",
+          "it": "Informazioni del negozio",
+          "en": "Store information",
+          "es": "Información sobre tu tienda",
+          "de": "Laden-Info",
+          "ja": "ストア情報",
+          "fr": "Renseignements sur votre boutique"
+        }
+      }
+    ]
+  }
+{% endschema %}

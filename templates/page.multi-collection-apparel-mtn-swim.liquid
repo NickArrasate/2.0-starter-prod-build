@@ -1,0 +1,12 @@
+<article class="site-page" data-template-page>
+  {% section 'static-page-intro-meta' %}
+  {% section 'mtn-swim-cta' %}
+{% section 'static-highlights-banners' %}
+  {% if page.content != blank %}
+    <div class="page-content shopify-section rte">
+      {{ page.content }}
+    </div>
+  {% endif %}
+  {% section 'static-collection-multi-meta' %}
+  {% section 'mtn-swim-explore-CTA' %}
+</article>

@@ -1,0 +1,46 @@
+{% if section.settings.show %}
+<script
+  type="application/json"
+  data-section-type="static-article"
+  data-section-id="{{ section.id }}">
+</script>
+
+  {% if blog.next_article or blog.previous_article %}
+  <section class="">
+    <div class="article--pagination">
+      {% assign current_found = false %}
+      {% assign done = false %}
+      {% for a in blog.articles %}
+        {% if current_found and done == false %}
+          {% assign next_article = a %}
+          {% assign done = true %}
+        {% endif %}
+
+        {% unless done %}
+          {% if a.id == article.id %}
+            {% assign current_found = true %}
+          {% else %}
+            {% assign prev_article = a %}
+          {% endif %}
+        {% endunless %}
+      {% endfor %}
+    {% render 'article-comments' %}
+    </div>
+  </section>
+  {% endif %}
+{% endif %}
+
+{% schema %}
+{
+  "name": "Pagination Team Leads",
+  "class": "blog--section pagination team-leads p-0",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show",
+      "label": "Show this section?",
+      "default": false
+    }
+  ]
+}
+{% endschema %}

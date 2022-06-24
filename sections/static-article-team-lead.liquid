@@ -1,0 +1,141 @@
+{% assign bioImage = article.metafields["global"]["team_lead_bio_image"] %}
+
+{% assign sigImage = article.metafields["global"]["team_lead_signature_image"] %}
+
+{% assign quote = article.metafields["global"]["team_lead_quote"] %}
+
+{% assign featuredImage = article.metafields["global"]["team_lead_feature_image"] %}
+
+{% assign title = article.metafields["global"]["team_lead_title"] %}
+
+{% assign instaUrl = article.metafields["global"]["athlete_insta"] %}
+
+<script
+  type="application/json"
+  data-section-type="static-article"
+  data-section-id="{{ section.id }}">
+</script>
+
+{% assign has_share = false %}
+{% if section.settings.use_share_buttons %}
+  {% assign has_share = true %}
+{% endif %}
+
+{%- capture share_buttons -%}
+  {% if instaUrl %}
+      <a
+        class="share-buttons--button share-buttons--instagram"
+        target="_blank"
+        style="color: #444"
+        href="{{ instaUrl }}">
+        {%-
+          render 'social-icon',
+          id: 'instagram'
+        -%}
+        <span class="visually-hidden">Visit Instagram</span>
+      </a>
+  {% endif %}
+{%- endcapture  -%}
+
+<section class="article--outer team-leads">
+  <div class="article--container">
+    <div class="article--inner row">
+      <div class="col-sm-6 article-bio-image-wrap">
+        {% if bioImage %}
+        <img class="article-bio-image" src="{{ bioImage }}" alt="">
+        {% elsif article.image %}
+          <figure
+            class="article-image"
+            {%
+              render 'rimg',
+              img: article.image,
+              size: '1800x',
+              lazy: true,
+              crop: 'center',
+              background: true
+            %}
+          >
+            {%
+              render 'rimg',
+              img: article.image,
+              size: '1800x',
+              crop: 'center',
+              lazy: true,
+              canvas: true
+            %}
+          </figure>
+        {% endif %}
+        <div class="bar">
+          <div></div>
+        </div>
+        <div class="center-bar"></div>
+      </div>
+      <div class="col-sm-6">
+        {% if section.settings.show_date or section.settings.show_author %}
+          <div class="article--meta">
+            {% if section.settings.show_date %}
+              <span class="article--meta-item">
+                {{ article.published_at | date: format: 'month_day_year' }}
+              </span>
+            {% endif %}
+
+            {% if section.settings.show_author %}
+              <span class="article--meta-item">
+                {{ article.author }}
+              </span>
+            {% endif %}
+            </div>
+          {% endif %}
+
+          <h1 class="text-center team-lead-title">
+            {{ article.title }}
+          </h1>
+          <h3 class="text-center team-lead-subtitle">
+            {{ title }}
+          </h3>
+
+          <div class="article--content rte">
+            {{ article.content }}
+          </div>
+          <div class="">
+            {{- share_buttons -}}
+          </div>
+        </div>
+        <div class="col-12 row team-lead-quote-wrapper">
+          <div class="col-sm-5 col-md-4"><img class="article-quote-image" src="{{ featuredImage }}" alt="">
+          </div>
+          <div class="col-sm-7 col-md-8"><blockquote>{{ quote }}</blockquote>
+          <img class="article-signature-image" src="{{ sigImage }}" alt="">
+          </div>
+        </div>
+
+      </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "team leader article pages",
+  "class": "article--section team-leads",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show date published",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show post author",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "use_share_buttons",
+      "label": "Use share buttons",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

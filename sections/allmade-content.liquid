@@ -1,0 +1,126 @@
+{% if product.tags contains 'all-made' %}
+<div class="text-center">
+  <h1 class="emphasized-title emphasized-title--large product-section--title">{{section.settings.upper_title}}</h1>
+  <h2 style="margin-top: 0;">{{section.settings.upper_subtitle}}</h2>
+  <ul class="blog--inner allmade-blocks">
+    {% for block in section.blocks %}
+    <li class="article--excerpt-wrapper">
+      <img class="allmade-content-bg" src="{{ block.settings.image | img_url: '640x480' }}" alt="" />
+      <div class="allmade-content">
+        <h2 class="text-green">{{block.settings.title}}</h2>
+        <h4>{{block.settings.subtitle}}</h4>
+        <div class="allmade-break-bar"></div>
+        <p>{{block.settings.content_text}}</p>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  <div class="allmade-subtext">
+    <small><em>Results of the Allmade Impact Calculator are for informational purposes only and should not be reproduced, used for commercial purposes, or used in sustainability reporting and formal footprinting exercises. We performed an analysis to estimate the relative impact of an Allmade t-shirt. Where primary data was not available, secondary data was used.</em></small>
+  </div>
+  <div class="allmade-subsection text-center">
+    <h2>{{section.settings.lower_title}}</h2>
+    <img  class="allmade-large-image small-hide" src="{{ section.settings.large_image | img_url: '1200x' }}" alt="" />
+    <img  class="allmade-large-image small-show" src="{{ section.settings.large_image_mobile | img_url: '600x' }}" alt="" />
+  </div>
+</div>
+{% endif %}
+{% schema %}
+  {
+    "name": "Allmade Content",
+    "class": "index-section team-grid shopify-section",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Upper Section"
+      },
+      {
+        "type": "text",
+        "id": "upper_title",
+        "label": "Upper Section Title",
+        "default": "Partnering with all made for Sustainability"
+      },
+      {
+        "type": "text",
+        "id": "upper_subtitle",
+        "label": "Upper Section Subitle",
+        "default": "What’s Your T-Shirt Impact (for every 100 garments)"
+      },
+      {
+        "type": "header",
+        "content": "Lower Section"
+      },
+      {
+        "type": "text",
+        "id": "lower_title",
+        "label": "Lower Section Title",
+        "default": "A BETTER T-SHIRT STARTS WITH BETTER RAW MATERIALS"
+      },
+      {
+        "type": "image_picker",
+        "id": "large_image",
+        "label": "Large Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "large_image_mobile",
+        "label": "Large Image (Mobile)"
+      }
+    ],
+    "max_blocks": 3,
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Column Content",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Grid Item"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title Text"
+          },
+          {
+            "type": "text",
+            "id": "subtitle",
+            "label": "Subtitle Text"
+          },
+          {
+            "type": "textarea",
+            "id": "content_text",
+            "label": "Content Text"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": {
+              "pt-BR": "Imagem",
+              "it": "Immagine",
+              "en": "Image (overrides default gifs)",
+              "es": "Imagen",
+              "de": "Foto",
+              "ja": "画像",
+              "fr": "Image"
+            }
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": {
+          "pt-BR": "Blocos de links múltiplos",
+          "it": "Più gruppi di link",
+          "en": "Multiple link blocks",
+          "es": "Enlaces múltiples",
+          "de": "Mehrere Linkblöcke",
+          "ja": "複数のリンクのブロック",
+          "fr": "Blocs de liens multiples"
+        },
+        "category": "CTA"
+        }
+      ]
+      }
+{% endschema %}

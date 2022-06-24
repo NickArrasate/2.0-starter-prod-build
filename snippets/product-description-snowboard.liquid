@@ -1,0 +1,159 @@
+
+{% assign descriptionArray = product.description | split: '<!--description-->' %}
+{% assign description = descriptionArray[1] %}
+
+{% assign widthArray = product.description | split: '<!--width-->' %}
+{% assign width = widthArray[1] %}
+
+{% assign lengthArray = product.description | split: '<!--length-->' %}
+{% assign length = lengthArray[1] %}
+
+{% assign profileArray = product.description | split: '<!--profile-->' %}
+{% assign profile = profileArray[1] %}
+
+{% assign radiusArray = product.description | split: '<!--flex-->' %}
+{% assign radius = radiusArray[1] %}
+
+{% assign weightArray = product.description | split: '<!--shape-->' %}
+{% assign weight = weightArray[1] %}
+
+{% assign artArray = product.description | split: '<!--behind-the-art-->' %}
+{% assign art = artArray[1] %}
+
+{% assign testimonialArray = product.description | split: '<!--testimonial-->' %}
+{% assign testimonial = testimonialArray[1] %}
+
+{% assign dampArray = product.description | split: '<!--damp-->' %}
+{% assign damp = dampArray[1] %}
+
+
+{% for tag in product.tags %}
+  {% if tag contains 'profile-' %}
+  {% assign profileArray = tag | split: '-' %}
+  {% assign profileTag = profileArray.last %}
+  {% endif %}
+{% endfor %}
+
+{% capture ski_table %}
+<div class="sizing-chart-wrap">
+  {% assign tableWidth = product.variants.size %}
+  <table class="sizing-chart">
+    <tr>
+      <td>Length</td>
+      {% for variant in product.variants %}
+      <td>{{variant.title}}</td>
+      {% endfor %}
+    </tr>
+  {% comment %}{% if width != '' %}
+    <tr>
+      <td>Width</td>
+      <td class="text-center" colspan="{{tableWidth}}">{{width | remove: ' ' }}</td>
+    </tr>
+  {% endif %}{% endcomment %}
+  {% if width != '' %}
+  {% assign widthArray = width | split: '/' %}
+    <tr>
+      <td>Width</td>
+      {% for wdt in widthArray %}
+      <td>{{wdt | remove: 'g' | remove: ' '}}</td>
+      {% endfor %}
+    </tr>
+  {% endif %}
+  {% if profile != '' %}
+    <tr>
+      <td>Profile</td>
+      <td class="text-center" colspan="{{tableWidth}}">{{profile}}</td>
+    </tr>
+  {% endif %}
+  {% if radius != '' %}
+  {% assign radArray = radius | split: '/' %}
+    <tr>
+      <td>Flex</td>
+      {% for rad in radArray %}
+      <td>{{rad | remove: 'm' | remove: ' '}}/10</td>
+      {% endfor %}
+    </tr>
+  {% endif %}
+  {% if damp != '' %}
+  {% assign dampArray = radius | split: '/' %}
+    <tr>
+      <td>Damp</td>
+      {% for damp in dampArray %}
+      <td>{{damp | remove: 'm' | remove: ' '}}/10</td>
+      {% endfor %}
+    </tr>
+  {% endif %}
+  {% if weight != '' %}
+  {% assign wtArray = weight | split: '/' %}
+    <tr>
+      <td>Shape</td>
+      {% for wt in wtArray %}
+      <td>{{wt | remove: 'g' | remove: ' '}}</td>
+      {% endfor %}
+    </tr>
+  {% endif %}
+
+  </table>
+</div>
+{% endcapture %}
+
+{% render 'product-badges-skis' %}
+
+
+{% unless product.description == blank or hide_description %}
+  <div class="product-description rte" data-product-description>
+    {{ description }}
+  </div>
+{% endunless %}
+
+<nav class="product-tabs">
+  <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+  {% if width != '' or length != '' or length != '' or radius != '' or weight != '' %}
+    <a class="nav-item nav-link active" id="nav-dimensions-tab" data-toggle="tab" href="#nav-dimensions" role="tab" aria-controls="nav-dimensions" aria-selected="true">Specs</a>
+  {% endif %}
+  {% if art != '' %}
+    <a class="nav-item nav-link" id="nav-art-tab" data-toggle="tab" href="#nav-art" role="tab" aria-controls="nav-art" aria-selected="false">Behind the Art</a>
+  {% endif %}
+  {% comment %}{% if testimonial != '' %}
+  <a class="nav-item nav-link" id="nav-testimonial-tab" data-toggle="tab" href="#nav-testimonial" role="tab" aria-controls="nav-testimonial" aria-selected="false">Athlete Testimonial</a>
+  {% endif %}{% endcomment %}
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+{% if width != '' or length != '' or radius != '' or weight != '' or profile != '' or damp != '' %}
+  <div class="tab-pane fade show active" id="nav-dimensions" role="tabpanel" aria-labelledby="nav-dimensions-tab">
+    {{ ski_table }}
+  </div>
+{% endif %}
+
+{% if art != '' %}
+  <div class="tab-pane fade" id="nav-art" role="tabpanel" aria-labelledby="nav-art-tab">
+    <p class="underlined">{{art}}</p>
+  </div>
+{% endif %}
+{% if profileTag != '' %}
+  <div class="tab-pane fade text-center" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+    {% if profileTag == 'rcr' %}
+    {% render 'profile-image-rcr' %}
+    {% endif %}
+    {% if profileTag == 'r' %}
+    {% render 'profile-image-r' %}
+    {% endif %}
+    {% if profileTag == 'rr' %}
+    {% render 'profile-image-r' %}
+    {% endif %}
+    {% if profileTag == 'c' %}
+    {% render 'profile-image-c' %}
+    {% endif %}
+    {% if profileTag == 'rc' %}
+    {% render 'profile-image-rc' %}
+    {% endif %}
+  </div>
+{% endif %}
+{% comment %}{% if testimonial != '' %}
+  <div class="tab-pane fade" id="nav-testimonial" role="tabpanel" aria-labelledby="nav-art-testimonial">
+  <blockquote class="ath-testimonial">{{testimonial}}</blockquote>
+  </div>
+{% endif %}{% endcomment %}
+</div>
+{% render 'product-ratings' %}

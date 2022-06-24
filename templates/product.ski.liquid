@@ -1,0 +1,16 @@
+{% render 'breadcrumbs' %}
+
+{% section 'static-product-skis' %}
+{% section 'product-collection-video' %}
+{% if product.metafields['global']['recommend_1'] != blank %}
+{% section 'custom-meta-recommendations' %}
+{% else %}
+{% section 'static-product-recommendations' %}
+{% endif %}
+{% section 'product-collection-explore-cta' %}
+{% section 'product-ski-cross-section' %}
+
+{% section 'static-product-reviews' %}
+{% section 'product-ski-faq' %}
+{% section 'product-ski-warranty' %}
+{% section 'product-instagram' %}

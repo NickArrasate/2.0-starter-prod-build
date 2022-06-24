@@ -1,0 +1,49 @@
+{% for tag in product.tags %}
+
+{% if tag == 'mens' %}
+{% assign mens = true %}
+{% elsif tag == 'womens' %}
+{% assign womens = true %}
+{% endif %}
+
+{% if tag == 'bottoms' %}
+{% assign bottoms = true %}
+{% elsif tag == 'tops' %}
+{% assign tops = true %}
+{% endif %}
+
+{% if tag == 'unisex' %}
+{% assign unisex = true %}
+{% endif %}
+
+{% if tag == 'leggings' %}
+{% assign leggings = true %}
+{% endif %}
+
+{% if tag == 'hats' %}
+{% assign hats = true %}
+{% endif %}
+
+{% if tag == 'rack' %}
+{% assign rack = true %}
+{% endif %}
+
+{% if tag == 'swim' or tag contains 'Swim' or tag contains 'swim' %}
+{% assign swim = true %}
+{% endif %}
+
+{% if swim %}
+{% assign swim = true %}
+{% endif %}
+
+{% if tag == 'socks' or product.title contains 'socks' or product.title contains 'Socks' %}
+{% assign socks = true %}
+{% endif %}
+
+{% if rack %}
+{% assign needsRackChart = true %}
+{% elsif tops or bottoms or socks or swim or unisex or hats or leggings %}
+{% assign needsChart = true %}
+{% endif %}
+
+{% endfor %}

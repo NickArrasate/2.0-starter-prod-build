@@ -1,0 +1,53 @@
+
+<!-- this should just take collection image -->
+{% assign collHero = section.settings.image %}
+<div class="page-width">
+  {% assign imgObj = collHero | img_url: '1500x' | format: 'png' %}
+  {% assign img_url = collHero | img_url: '1500x' | format: 'png' %}
+
+
+  <div class="section-block">
+    <div class="emphasized-title-container right">
+      <h4 class="emphasized-title emphasized-title--large">
+          {{ section.settings.title }}
+      </h4>
+  </div>
+      <div class="featured-content explore-cta-wrapper text-center" >
+        {% if img_url != blank %}<img class="explore-cta-image" src="{{ img_url }}"/>{% endif %}
+      </div>
+    <div class="featured-content lazyload"
+      {% if imgObj != blank %}
+        style="background-position: {{ section.settings.image_align }};
+                background-image: url('{{ imgObj | img_url: '300x300' }});"
+      {% endif %}
+      data-bgset="{% render 'bgset', image: imgObj %}"
+      data-sizes="auto"
+      data-parent-fit="cover">
+    </div>
+    {% if imgObj == blank %}
+      <div class="placeholder-background">
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "MTN Swim cta",
+    "class": "index-section",
+    "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Lifestyle Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Return To Nature"
+        }
+    ]
+  }
+{% endschema %}
