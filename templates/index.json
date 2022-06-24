@@ -111,7 +111,7 @@
           "type": "highlight",
           "settings": {
             "icon": "icon-cell-phone",
-            "title": "Armadillo! Oh Yeah!",
+            "title": "Armadillo! Oh Yeah! test conflict",
             "text": "<p>+1 (201) 555-5555<\/p>",
             "link": ""
           }
