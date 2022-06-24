@@ -1,0 +1,110 @@
+<div id="zoomModal_{{forloop.index}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="zoomModal_{{forloop.index}} Label" aria-hidden="true" style="background-color: white; display: none;">
+  <div class="modal-dialog zoom-modal">
+    <div class="modal-content zoom-modal-content">
+    <button type="button" class="close text-right mr-4" data-dismiss="modal" aria-hidden="true">×</button>
+      <div class="modal-body">
+		<div class="wrapped">
+			<div class="modal-zoom-large-photo-wrap modal-zoom-large-photo-wrap_{{forloop.index}}">
+				<div class="">
+					<a id="modal-zoom-photo_{{forloop.index}}" class="zoom-in-cursor" href="#" ><div class="scroll scroll_{{forloop.index}}"><img class="margin-bottom img-responsive " src="{{image | img_url: 'x1800'}}"></div></a>
+        </div>
+			</div>
+		</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  $(document).ready(function(){
+
+    $(window).on('shown.bs.modal', function() {
+      var innerHeight = $('.modal-zoom-large-photo-wrap_{{forloop.index}}').outerHeight();
+      console.log(innerHeight)
+      $('.scroll_{{forloop.index}}').css('height', innerHeight + 'px' )
+    });
+
+
+
+  var current = {x: 0, y: 0, zoom: 1};
+	$(document).on("click","#modal-zoom-photo_{{forloop.index}}",function(e){
+    var offset = $(".modal-zoom-large-photo-wrap_{{forloop.index}}").offset();
+		if(current.zoom > 1){
+			current = {x: 0, y: 0, zoom: 1};
+			$(this).removeClass().addClass("zoom-in-cursor");
+		}
+		else{
+			$(this).removeClass().addClass("zoom-out-cursor");
+			var coef = e.shiftKey || e.ctrlKey ? 0.5 : 3.0,
+				delm = document.documentElement,
+				oz = current.zoom,
+				nz = current.zoom * coef,
+				sx = delm.scrollLeft,
+				sy = delm.scrollTop,
+				ox = offset.left,
+        oy = offset.top,
+				mx = e.clientX - ox + sx,
+				my = e.clientY - oy + sy,
+				ix = (mx - current.x) / oz,
+				iy = (my - current.y) / oz,
+				nx = ix * nz,
+				ny = iy * nz,
+				cx = (ix + (mx - ix) - nx),
+				cy = (iy + (my - iy) - ny)
+			;
+      current.zoom = nz;
+      current.x = cx;
+      current.y = cy;
+		}
+		$(".modal-zoom-large-photo-wrap_{{forloop.index}}").css({
+        '-webkit-transform' : 'translate('+current.x+'px, '+current.y+'px) scale(' + current.zoom + ')',
+        '-moz-transform'    : 'translate('+current.x+'px, '+current.y+'px) scale(' + current.zoom + ')',
+        '-ms-transform'     : 'translate('+current.x+'px, '+current.y+'px) scale(' + current.zoom + ')',
+        '-o-transform'      : 'translate('+current.x+'px, '+current.y+'px) scale(' + current.zoom + ')',
+        'transform'         : 'translate('+current.x+'px, '+current.y+'px) scale(' + current.zoom + ')'
+		});
+		return false;
+	});
+    });
+    // PAN
+
+    var clicking = false;
+    var previousX;
+    var previousY;
+
+$(".scroll_{{forloop.index}}").mousedown(function(e) {
+    e.preventDefault();
+    previousX = e.clientX;
+    previousY = e.clientY;
+    clicking = true;
+});
+
+$(document).mouseup(function() {
+    clicking = false;
+});
+
+$(".scroll_{{forloop.index}}").mousemove(function(e) {
+
+    if (clicking) {
+        e.preventDefault();
+        var directionX = (previousX - e.clientX) > 0 ? 1 : -1;
+        var directionY = (previousY - e.clientY) > 0 ? 1 : -1;
+        //$("#scroll").scrollLeft($("#scroll").scrollLeft() + 10 * directionX);
+        //$("#scroll").scrollTop($("#scroll").scrollTop() + 10 * directionY);
+        $("#scroll_{{forloop.index}}").scrollLeft($("#scroll_{{forloop.index}}").scrollLeft() + (previousX - e.clientX));
+        $("#scroll_{{forloop.index}}").scrollTop($("#scroll_{{forloop.index}}").scrollTop() + (previousY - e.clientY));
+        previousX = e.clientX;
+        previousY = e.clientY;
+    }
+});
+
+
+
+$("#scroll_{{forloop.index}}").mouseleave(function(e) {
+    clicking = false;
+});
+
+
+</script>
+<style>
+
+</style>

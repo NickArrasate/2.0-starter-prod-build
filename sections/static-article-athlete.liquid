@@ -1,0 +1,235 @@
+{% assign highlightImage = article.metafields["global"]["athlete_highlight_image"] %}
+
+{% assign title = article.metafields["global"]["athlete_title"] %}
+
+{% assign skiChoice = article.metafields["global"]["athlete_ski_choice"] %}
+
+{% assign homeMtn = article.metafields["global"]["athlete_home_mtn"] %}
+
+{% assign homeTown = article.metafields["global"]["athlete_hometown"] %}
+
+{% assign instaUrl = article.metafields["global"]["athlete_insta"] %}
+
+{% assign facebookUrl = article.metafields["global"]["athlete_facebook"] %}
+
+{% assign ffImage = article.metafields["global"]["athlete_fun_fact_image"] %}
+
+{% assign ffImageMobile = article.metafields["global"]["athlete_fun_fact_image_mobile"] %}
+
+{% assign ffCopy1 = article.metafields["global"]["athlete_fun_fact_text_1"] %}
+
+{% assign ffCopy2 = article.metafields["global"]["athlete_fun_fact_text_2"] %}
+
+{% assign video = article.metafields["global"]["athlete_video"] %}
+
+{% assign productSki = article.metafields["global"]["athlete_ski_handle"] %}
+
+{% assign product1 = article.metafields["global"]["athlete_product1_handle"] %}
+
+{% assign product2 = article.metafields["global"]["athlete_product2_handle"] %}
+
+<script
+  type="application/json"
+  data-section-type="static-article"
+  data-section-id="{{ section.id }}">
+</script>
+
+{% assign has_share = false %}
+{% if section.settings.use_share_buttons %}
+  {% assign has_share = true %}
+{% endif %}
+
+{%- capture share_buttons -%}
+  {% if instaUrl %}
+      <a
+        class="share-buttons--button share-buttons--instagram athlete"
+        target="_blank"
+        style="color: #444"
+        href="{{ instaUrl }}">
+        {%-
+          render 'social-icon',
+          id: 'instagram'
+        -%}
+        <span class="visually-hidden">Visit Instagram</span>
+      </a>
+  {% endif %}
+{%- endcapture  -%}
+
+<section class="article--outer">
+  <div class="article--container">
+    <div class="article--inner row">
+      <div class="col-sm-6 article-bio-image-wrap">
+        {% if highlightImage %}
+        <div class="article-bio-image">
+          <img  src="{{ highlightImage }}" alt="">
+        </div>
+        {% elsif article.image %}
+          <figure
+            class="article-image"
+            {%
+              render 'rimg',
+              img: article.image,
+              size: '1800x',
+              lazy: true,
+              crop: 'center',
+              background: true
+            %}
+          >
+            {%
+              render 'rimg',
+              img: article.image,
+              size: '1800x',
+              crop: 'center',
+              lazy: true,
+              canvas: true
+            %}
+          </figure>
+        {% endif %}
+        <div class="box"></div>
+      </div>
+      <div class="col-sm-6">
+        {% if section.settings.show_date or section.settings.show_author %}
+        <div class="article--meta">
+          {% if section.settings.show_date %}
+            <span class="article--meta-item">
+              {{ article.published_at | date: format: 'month_day_year' }}
+            </span>
+          {% endif %}
+
+          {% if section.settings.show_author %}
+            <span class="article--meta-item">
+              {{ article.author }}
+            </span>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      <div class="emphasized-title-container right">
+        <h1 class="text-right emphasized-title article--title">
+          {{ article.title }}
+        </h1>
+        <h3>{{ title }}</h3>
+      </div>
+
+      <div class="article--content rte">
+        {{ article.content }}
+      </div>
+        <div class="article--share-buttons">
+          {{- share_buttons -}}
+        </div>
+      </div>
+      <div class="col-12 row athlete-icon-row">
+        <div class="col-sm-4 athlete-icon"><img src="{{ 'home.svg' | asset_url }}" alt=""><p class="text-center">Hometown: {{ homeTown }}</p></div>
+        <div class="col-sm-4 athlete-icon"><img src="{{ 'mountain.svg' | asset_url }}" alt=""><p class="text-center">Favorite Mountain: {{ homeMtn }}</p></div>
+        <div class="col-sm-4 athlete-icon"><img src="{{ 'snowboard.svg' | asset_url }}" alt=""><p class="text-center">Ski of Choice: {{ skiChoice }}</p></div>
+      </div>
+
+      <div class="fun-facts-wrapper subsection-wrapper col-12">
+        <div class="emphasized-title-container left">
+          <h2 class="text-left emphasized-title article--title">
+            Fun Facts
+          </h2>
+        </div>
+        <div class="ff-copy-1">{{ ffCopy1 }}</div>
+        <div class="ff-copy-2">{{ ffCopy2 }}</div>
+        {% if ffImage %}
+          <img class="{% if ffImageMobile %}small-hide{% endif %}" src="{{ ffImage }}" alt="fun fact image">
+        {% endif %}
+        {% if ffImageMobile %}
+          <img class="small-show" src="{{ ffImageMobile }}" alt="fun fact image">
+        {% endif %}
+      </div>
+      {% if video %}
+      <div class="subsection-wrapper col-12">
+        <div class="col">
+          <div class="article-video-intro emphasized-title-container right">
+            <h2 class="text-right emphasized-title article--title">
+              {{article.title}}'s Video
+            </h2>
+            <p class="text-right">Watch more on the <a href="/blogs/videos">Icelantic Blog</a></p>
+          </div>
+          <div class="article-video-wrapper video-container ">
+            {{ video }}
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      <script
+        type="application/json"
+        data-section-id="{{ section.id }}"
+        data-section-type="dynamic-featured-collection">
+      </script>
+      <div class="subsection-wrapper col-12 ">
+        <div class="emphasized-title-container left">
+          <h2 class="text-left emphasized-title article--title">
+            Shop the Goods
+          </h2>
+        </div>
+          <div class="row">
+          <div class="col-sm-4">
+            {%
+              render 'product-grid-item-handle',
+              handle: product1
+            %}
+            {%
+              render 'product-grid-item-handle',
+              handle: product2
+            %}
+          </div>
+          <div class="col-sm-8">
+            {%
+              render 'product-grid-item-handle',
+              handle: productSki
+            %}
+          </div>
+          </div>
+      </div>
+
+      </div>
+      {% if blog.next_article or blog.previous_article %}
+        <div class="article--pagination">
+          {% assign current_found = false %}
+          {% assign done = false %}
+          {% for a in blog.articles %}
+            {% if current_found and done == false %}
+              {% assign next_article = a %}
+              {% assign done = true %}
+            {% endif %}
+
+            {% unless done %}
+              {% if a.id == article.id %}
+                {% assign current_found = true %}
+              {% else %}
+                {% assign prev_article = a %}
+              {% endif %}
+            {% endunless %}
+          {% endfor %}
+      {% render 'article-comments' %}
+    </div>
+    {% endif %}
+  </div>
+  {% render 'quick-shop' %}
+</section>
+
+{% schema %}
+{
+  "name": "Athlete pages",
+  "class": "article--section athlete",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show date published",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "use_share_buttons",
+      "label": "Use share buttons",
+      "default": true
+    }
+  ]
+}
+
+{% endschema %}

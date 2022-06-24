@@ -1,0 +1,13 @@
+{% render 'breadcrumbs' %}
+{% section 'static-product' %}
+
+{% if product.metafields['global']['recommend_1'] != blank %}
+{% section 'custom-meta-recommendations' %}
+{% else %}
+{% section 'static-product-recommendations' %}
+{% endif %}
+{% section 'allmade-content' %}
+{% section 'made-in-usa' %}
+{% section 'product-collection-explore-apparel' %}
+{% section 'static-product-reviews' %}
+{% section 'product-instagram' %}

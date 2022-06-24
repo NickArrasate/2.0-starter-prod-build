@@ -1,0 +1,10 @@
+<div class="page-width section-inner">
+  {% section 'static-slideshow-blog' %}
+    {% if section.settings.title != blank %}
+      <div class="section-block__header text-center">
+        <h2 class="section-block__title">{{ section.settings.title | escape }}</h2>
+      </div>
+    {% endif %}
+{% section 'blog-tab-nav' %}
+{% section 'static-blog-2' %}
+</div>

@@ -1,0 +1,130 @@
+{% assign descriptionArray = product.description | split: '<!--description-->' %}
+{% assign description = descriptionArray[1] %}
+
+{% assign featuresArray = product.description | split: '<!--features-->' %}
+{% assign features = featuresArray[1] %}
+
+{% assign materialsArray = product.description | split: '<!--materials-->' %}
+{% assign materials = materialsArray[1] %}
+
+{% assign careArray = product.description | split: '<!--care-instructions-->' %}
+{% assign care = careArray[1] %}
+
+{% capture rack_table %}
+  <table class="sizing-chart rack">
+    <tr>
+      <td class="rack"><strong>S</strong></br><small>(70-80mm)</small></td>
+      <td class="rack"><strong>M</strong></br><small>(80-90mm)</small></td>
+      <td class="rack"><strong>L</strong></br><small>(90-101mm)</small></td>
+      <td class="rack"><strong>XL</strong></br><small>(105mm +)</small></td>
+    </tr>
+    <tr>
+      <td class="rack">Oracle 78</td>
+      <td class="rack">Pioneer 86</td>
+      <td class="rack">Nomad 95</td>
+      <td class="rack">Nomad 105</td>
+    </tr>
+    <tr>
+      <td class="rack">Scout 75</td>
+      <td class="rack">Sabre 80</td>
+      <td class="rack">Pioneer 96</td>
+      <td class="rack">Nomad 115</td>
+    </tr>
+    <tr>
+      <td class="rack"></td>
+      <td class="rack">Oracle 78</td>
+      <td class="rack">Maiden 91</td>
+      <td class="rack">Nomad 125</td>
+    </tr>
+    <tr>
+      <td class="rack"></td>
+      <td class="rack">Oracle 88</td>
+      <td class="rack">Sabre 99</td>
+      <td class="rack">Nomad Lite</td>
+    </tr>
+    <tr>
+      <td class="rack"></td>
+      <td class="rack">Sabre 89</td>
+      <td class="rack">Natural 101</td>
+      <td class="rack">Pioneer 109</td>
+    </tr>
+    <tr>
+      <td class="rack"></td>
+      <td class="rack">Riveter 85</td>
+      <td class="rack">Maiden 101</td>
+      <td class="rack">Maiden 111</td>
+    </tr>
+    <tr>
+      <td class="rack"></td>
+      <td class="rack">Scout 85</td>
+      <td class="rack">Riveter 95</td>
+      <td class="rack">Mystic 107</td>
+    </tr>
+    <tr>
+      <td class="rack"></td>
+      <td class="rack">Scout 88</td>
+      <td class="rack">Mystic 97</td>
+      <td class="rack"></td>
+    </tr>
+  </table>
+{% endcapture %}
+
+{% render 'sizing-chart-switcher' %}
+
+{% render 'product-badges' %}
+
+{% unless product.description == blank or hide_description %}
+  <div class="product-description rte" data-product-description>
+    {{ description }}
+  </div>
+{% endunless %}
+<nav class="product-tabs">
+  <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+  {% if features != '' %}
+    <a class="nav-item nav-link active" id="nav-features-tab" data-toggle="tab" href="#nav-features" role="tab" aria-controls="nav-features" aria-selected="true">Features</a>
+  {% endif %}
+  {% if materials != '' %}
+    <a class="nav-item nav-link" id="nav-materials-tab" data-toggle="tab" href="#nav-materials" role="tab" aria-controls="nav-materials" aria-selected="false">Materials</a>
+  {% endif %}
+  {% if care != '' %}
+    <a class="nav-item nav-link" id="nav-care-tab" data-toggle="tab" href="#nav-care" role="tab" aria-controls="nav-care" aria-selected="false">Care Instructions</a>
+  {% endif %}
+  {% if needsChart %}
+    <a class="nav-item nav-link" id="nav-sizing-tab" data-toggle="tab" href="#nav-sizing" role="tab" aria-controls="nav-sizing" aria-selected="false">Sizing Chart</a>
+  {% endif %}
+  {% if needsRackChart %}
+    <a class="nav-item nav-link" id="nav-rack-tab" data-toggle="tab" href="#nav-rack" role="tab" aria-controls="nav-sizing" aria-selected="false">Sizing Chart</a>
+  {% endif %}
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+{% if features != '' %}
+  <div class="tab-pane fade show active" id="nav-features" role="tabpanel" aria-labelledby="nav-features-tab">
+    {{features}}
+  </div>
+{% endif %}
+{% if materials != '' %}
+  <div class="tab-pane fade" id="nav-materials" role="tabpanel" aria-labelledby="nav-materials">
+  {{materials}}
+  </div>
+{% endif %}
+{% if care != '' %}
+  <div class="tab-pane fade" id="nav-care" role="tabpanel" aria-labelledby="nav-art-care">
+  {{care}}
+  </div>
+{% endif %}
+{% if needsChart %}
+  <div class="tab-pane fade" id="nav-sizing" role="tabpanel" aria-labelledby="nav-art-sizing">
+    <div class="sizing-chart-wrap">
+      {% render 'sizing-chart-handler' %}
+    </div>
+  </div>
+{% endif %}
+{% if needsRackChart %}
+  <div class="tab-pane fade" id="nav-rack" role="tabpanel" aria-labelledby="nav-rack">
+    <div class="sizing-chart-wrap">
+      {{ rack_table }}
+    </div>
+  </div>
+{% endif %}
+</div>

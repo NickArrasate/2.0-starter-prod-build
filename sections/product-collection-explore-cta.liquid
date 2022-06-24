@@ -1,0 +1,161 @@
+
+{% for tag in product.tags %}
+{% if tag contains 'collection-' %}
+  {% assign colArr = tag | remove: 'collection-' %}
+  {% assign collectionHandle = colArr | replace_first: '/', '-' %}
+  {% assign collection = collections[collectionHandle] %}
+{% elsif tag contains 'collection_' %}
+  {% assign colArr = tag | remove: 'collection-' %}
+  {% assign collectionHandle = colArr | replace_first: '/', '-' %}
+  {% assign collection = collections[collectionHandle] %}
+{% endif %}
+{% endfor %}
+
+{% if product.metafields["global"]["product_highlight_image"] != blank %}
+  {% assign collHero = product.metafields["global"]["product_highlight_image"] %}
+  {% assign imgObj = collHero %}
+  {% assign img_url = collHero %}
+  {% assign mobileHero = product.metafields["global"]["product_highlight_image_mobile"] %}
+{% else %}
+  {% assign collHero = collection.image %}
+  {% assign mobileHero = collection.metafields["global"]["product_highlight_image_mobile"] %}
+  {% if collHero != blank %}
+    {% assign imgObj = collHero | img_url: '2000x' | format: 'png' %}
+  {% else %}
+    {% assign imgObj = collection.image | img_url: '2000x' | format: 'png' %}
+  {% endif %}
+  {% if collHero != blank %}
+    {% assign img_url = collHero | img_url: '2000x' | format: 'png' %}
+  {% else %}
+    {% assign img_url = collection.image | img_url: '2000x' | format: 'png' %}
+  {% endif %}
+{% endif %}
+
+
+
+
+<!-- this should just take collection image -->
+{% if collHero != blank %}
+
+<div class="page-width">
+
+  <div class="section-block lifestyle-wrapper">
+    <!-- <div class="emphasized-title-container right lifestyle {% unless mobileHero %}no-mobile{% endunless %}">
+      <h4 class="emphasized-title emphasized-title--large">
+        {{ collection.title }}
+      </h4>
+    </div> -->
+  {% if mobileHero %}
+  <div class="small-show" style="max-width: 100%;">
+    <img style="max-width: 100%;" src="{{ mobileHero  }}" alt="">
+  </div>
+  {% endif %}
+      <div class="featured-content explore-cta-wrapper {% unless mobileHero %}no-mobile{% endunless %}">
+        {% if img_url != blank %}<img class="explore-cta-image  small-hide" src="{{ img_url }}" style="max-width: 100%;"/>{% endif %}
+          <!-- <span class="emphasized-subtitle explore-cta-content {% if collection.template_suffix contains 'art' %}art{% endif %} {% unless mobileHero %}no-mobile{% endunless %}">
+            {{ collection.description }}
+            </br>
+            <a style="margin-top: 1rem;" href="{{ collection.url }}" class="button button-primary">Explore</a>
+          </span> -->
+      </div>
+    <div class="featured-content lazyload "
+      {% if imgObj != blank %}
+        style="background-position: {{ section.settings.image_align }};
+                background-image: url('{{ imgObj | img_url: '300x300' }});"
+      {% endif %}
+      data-bgset="{% render 'bgset', image: imgObj %}"
+      data-sizes="auto"
+      data-parent-fit="cover">
+    </div>
+    {% if imgObj == blank %}
+      <div class="placeholder-background">
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+{% schema %}
+  {
+    "name": {
+      "en": "Explore Image with cta"
+    },
+    "class": "index-section",
+    "settings": [
+      {
+        "type": "radio",
+        "id": "image_align",
+        "label": {
+          "pt-BR": "Alinhamento da imagem",
+          "it": "Allineamento immagine",
+          "en": "Image alignment",
+          "es": "Alineación de imagen",
+          "de": "Fotoausrichtung",
+          "ja": "画像アラインメント",
+          "fr": "Alignement de l'image"
+        },
+        "options": [
+          {
+            "value": "top center",
+            "label": {
+              "pt-BR": "Superior centro",
+              "it": "In alto al centro",
+              "en": "Top center",
+              "es": "Superior al centro",
+              "de": "Oben Mitte",
+              "ja": "中央上",
+              "fr": "En haut au centre"
+            }
+          },
+          {
+            "value": "center center",
+            "label": {
+              "pt-BR": "Centro",
+              "it": "Al centro",
+              "en": "Center",
+              "es": "Centrar",
+              "de": "Mitte",
+              "ja": "中央",
+              "fr": "Centre"
+            }
+          },
+          {
+            "value": "bottom center",
+            "label": {
+              "pt-BR": "Inferior centro",
+              "it": "In basso al centro",
+              "en": "Bottom center",
+              "es": "Inferior al centro",
+              "de": "Unten mittig",
+              "ja": "中央下",
+              "fr": "En bas au centre"
+            }
+          }
+        ],
+        "default": "top center"
+      }
+    ],
+    "presets": [
+      {
+        "name": {
+          "pt-BR": "Imagem com link de texto",
+          "it": "Immagine con text link",
+          "en": "Image with text link",
+          "es": "Imagen con enlace",
+          "de": "Bild mit Textlink",
+          "ja": "テキストリンク付き画像",
+          "fr": "Image avec lien texte"
+        },
+        "category": {
+          "pt-BR": "Imagem",
+          "it": "Immagine",
+          "en": "Image",
+          "es": "Imagen",
+          "de": "Foto",
+          "ja": "画像",
+          "fr": "Image"
+        }
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,212 @@
+<script
+  type="application/json"
+  data-section-type="dynamic-video"
+  data-section-id="{{ section.id }}"
+  data-section-data>
+  {
+    "autoplay": {{ section.settings.autoplay | json }}
+  }
+</script>
+{% if section.settings.show == 'true' %}
+  {%- assign layout = section.settings.layout -%}
+  {%- capture layoutDirection -%}
+  {{ layout }}
+  {%- endcapture -%}
+  <div class="page-width">
+    <div class="row about-section-row">
+      
+      {% capture image_box %}
+  {% assign image_size = '680x' %}
+  <div  class="col-sm-8 text-{%- cycle 'right', 'left' -%}">
+    {% if section.settings.url %}
+    {% assign url = null %}
+    {% assign url = section.settings.url %}
+        <div class="">
+          <div class="dynamic-video">
+            {% assign overlay = null %}
+            {% if section.settings.show_overlay %}
+              {% assign opacity = section.settings.opacity | times: 0.01 %}
+              {% assign overlay = section.settings.background | color_modify: 'alpha', opacity %}
+            {% endif %}
+
+            {%
+              render 'video',
+              cover: section.settings.cover,
+              aspect_ratio: section.settings.aspect_ratio,
+              overlay: overlay,
+              url: url
+            %}
+          {% if section.settings.show_caption %}
+            <div class="dynamic-video-caption rte">{{ section.settings.caption }}</div>
+          {% endif %}
+        </div>
+      </div>
+    {% elsif section.settings.image %}
+      <img style="max-width: 100%" src="{{ section.settings.image | img_url: '600x600' }}">
+    {% endif %}
+  </div>
+  {% endcapture %}
+  <div class="row">
+        {% if section.settings.layout == 'right' %}
+        {{ image_box }}
+        {% endif %}
+        <div class="col-sm-4">
+          <div class="collection--title emphasized-title-container left">
+            <h1 class="emphasized-title emphasized-title--large text-{{layoutDirection}}">{{ section.settings.title }}</h1>
+          </div>
+        <p class="text-{{layoutDirection}}">{{ section.settings.text_content }}</p>
+        <div class="row">
+        <div class="col-6 row">
+          {% if cta_link_1 %}
+          <div class="col-4">
+            <span class="emphasized-title link-block__cta">
+            <a class="button button-primary" href="{{cta_link_1}}">
+              {{ section.settings.cta_label }}
+              </a>
+            </span>
+          </div>
+          {% endif %}
+          {% if cta_link_2 %}
+          <div class="col-4">
+            <span class="emphasized-title link-block__cta">
+              <a class="button button-primary" href="{{cta_link_2}}">
+              {{ section.settings.cta_label_2 }}
+              </a>
+            </span>
+          </div>
+          {% endif %}
+          </div>
+        </div>
+      </div>
+        {% if section.settings.layout == 'left' %}
+        {{ image_box }}
+        {% endif %}
+    </div>
+    </div>
+  </div>
+  {% endif %}
+{% schema %}
+    {
+      "name": "Made In USA",
+      "class": "index-section",
+      "settings": [
+        {
+          "type": "radio",
+          "id": "show",
+          "label": "Display Section?",
+          "options": [
+            {
+              "value": "true",
+              "label": "Yes"
+            },
+            {
+              "value": "false",
+              "label": "No"
+            }
+          ],
+          "default": "false"
+        },
+        {
+          "type": "header",
+          "content": "Made In USA"
+        },
+        {
+          "type": "radio",
+          "id": "layout",
+          "label": "Layout",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "right", "label": "Right" }
+          ]
+        },
+        {
+          "type": "video_url",
+          "id": "url",
+          "label": "Link",
+          "accept": ["youtube", "vimeo"]
+        },
+        {
+          "type": "checkbox",
+          "id": "show_caption",
+          "label": "Show Caption"
+        },
+        {
+          "type": "richtext",
+          "id": "caption",
+          "label": "Caption",
+          "default": "<p>A short description of the video.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "autoplay",
+          "label": "Autoplay video"
+        },
+        {
+          "type": "select",
+          "id": "aspect_ratio",
+          "label": "Aspect ratio",
+          "options": [
+            {
+              "label": "16:9",
+              "value": "16-9"
+            },
+            {
+              "label": "21:9",
+              "value": "21-9"
+            }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "cover",
+          "label": "Cover image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Manifesto Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title Text",
+          "default": "Visit Our Flagship Store"
+        },
+        {
+          "type": "richtext",
+          "id": "text_content",
+          "label": "Paragraph Text",
+          "default": "<p>Icelantic has moved its HQ to the historic downtown of Golden, CO. The move to Golden, is a new chapter of the Icelantic story and allows us to easily practice what we preach…Returning To Nature. It also gives us the opportunity to invite people into our first ever retail space, welcoming you to experience and support the brand first hand. If you are ever in the area, please come by to check out the store and meet the people behind Icelantic.</p>"
+        },
+        {
+          "type": "link_list",
+          "id": "cta_link_1",
+          "label": "Link 1"
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "Manifest Link Text 1",
+          "default": "FAQ"
+        },
+        {
+          "type": "link_list",
+          "id": "cta_link_2",
+          "label": "Link 2"
+        },
+        {
+          "type": "text",
+          "id": "cta_label_2",
+          "label": "Manifesto Link Text 2",
+          "default": "Warranty Submission"
+        }
+      ],
+      "presets": [
+        {
+          "name": "Made In USA",
+          "category": "CTA"
+          }
+        ]
+        }
+  {% endschema %}
+  

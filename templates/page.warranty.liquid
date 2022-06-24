@@ -1,0 +1,21 @@
+{% section 'static-page-intro-meta' %}
+{% section 'warranty-intro' %}
+<article class="shopify-section contained" data-template-page data-template-contact>
+  <ul class="nav nav-tabs row d-flex justify-content-center warranty-nav contained">
+    <li class="col"><a  class="active" data-toggle="tab" href="#info"><h4>Warranty Info</h4></a></li>
+    <li class="col"><a data-toggle="tab" href="#form"><h4>Warranty Form</h4></a></li>
+  </ul>
+  <div class="tab-content">
+    <div id="info" class="tab-pane fade in active show">
+      {% if page.content != blank %}
+      <div class="page-content rte">
+        {{ page.content }}
+      </div>
+    {% endif %}
+    </div>
+{% render 'warranty-form.liquid' %}
+</div>
+    </div>
+  </div>
+
+</article>

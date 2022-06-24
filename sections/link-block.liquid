@@ -1,0 +1,173 @@
+<div class="page-width">
+  <div class="flex flex--grid flex--no-gutter">
+    {% assign image_size = '680x' %}
+    {% case section.blocks.size %}
+      {% when 1 %}
+        {% assign flex_size = '' %}
+        {% assign image_size = '1140x' %}
+      {% when 2 %}
+        {% assign flex_size = 'medium-up--one-half' %}
+      {% when 3 %}
+        {% assign flex_size = 'medium-up--one-third' %}
+      {% else %}
+        {% assign flex_size = 'medium-up--one-quarter' %}
+    {% endcase %}
+    {% for block in section.blocks %}
+      <div class="flex__item flex {{ flex_size }}" {{ block.shopify_attributes }}>
+        <noscript class="link-block-no-js">
+          <a href="{{ block.settings.link }}" class="link-block" {% if block.settings.image != blank %}style="background-image: url({{ block.settings.image | img_url: image_size | format: 'jpg' }});"{% endif %}>
+          {% if block.settings.image == blank %}
+            {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+            <div class="placeholder-background">
+              {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {% endif %}
+            <div class="flex flex--center-vertical">
+              <div class="flex__item">
+                <span class="emphasized-title h1 link-block__cta">
+                  {{ block.settings.cta_label | escape }}
+                </span>
+              </div>
+            </div>
+          </a>
+        </noscript>
+          <a href="{{ block.settings.link }}" class="link-block lazyload"
+           {% if block.settings.image != blank %}
+              style="background-position: {{ block.settings.image_align }};
+                     background-image: url('{{ block.settings.image | img_url: '300x300' }});"
+            {% endif %}
+            data-bgset="{% render 'bgset', image: block.settings.image %}"
+            data-sizes="auto"
+            data-parent-fit="cover">
+          {% if block.settings.image == blank %}
+            {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+            <div class="placeholder-background">
+              {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {% endif %}
+          <div class="flex flex--center-vertical">
+            <div class="flex__item">
+              <span class="emphasized-title h1 link-block__cta">
+                {{ block.settings.cta_label | escape }}
+              </span>
+            </div>
+          </div>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if section.blocks.size == 0 %}
+    {% render 'no-blocks' %}
+  {% endif %}
+</div>
+
+{% schema %}
+  {
+    "name": {
+      "pt-BR": "Blocos de links múltiplos",
+      "it": "Più gruppi di link",
+      "en": "Multiple link blocks",
+      "es": "Enlaces múltiples",
+      "de": "Mehrere Linkblöcke",
+      "ja": "複数のリンクのブロック",
+      "fr": "Blocs de liens multiples"
+    },
+    "class": "index-section",
+    "max_blocks": 10,
+    "blocks": [
+      {
+        "type": "link_block",
+        "name": {
+          "pt-BR": "Bloco de link",
+          "it": "Gruppo di link",
+          "en": "Link block",
+          "es": "Vincular bloque",
+          "de": "Linkblock",
+          "ja": "リンクのブロック",
+          "fr": "Bloc de lien"
+        },
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": {
+              "pt-BR": "Imagem",
+              "it": "Immagine",
+              "en": "Image",
+              "es": "Imagen",
+              "de": "Foto",
+              "ja": "画像",
+              "fr": "Image"
+            }
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": {
+              "pt-BR": "Link",
+              "it": "Link",
+              "en": "Link",
+              "es": "Enlace",
+              "de": "Link",
+              "ja": "リンク",
+              "fr": "Lien"
+            }
+          },
+          {
+            "type": "text",
+            "id": "cta_label",
+            "label": {
+              "pt-BR": "Etiqueta de link",
+              "it": "Etichetta link",
+              "en": "Link label",
+              "es": "Vincular etiqueta",
+              "de": "Link-Label",
+              "ja": "リンクラベル",
+              "fr": "Étiquette de lien"
+            },
+            "default": {
+              "pt-BR": "Etiqueta de link",
+              "it": "Etichetta link",
+              "en": "Link label",
+              "es": "Vincular etiqueta",
+              "de": "Link-Label",
+              "ja": "リンクラベル",
+              "fr": "Étiquette de lien"
+            }
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": {
+          "pt-BR": "Blocos de links múltiplos",
+          "it": "Più gruppi di link",
+          "en": "Multiple link blocks",
+          "es": "Enlaces múltiples",
+          "de": "Mehrere Linkblöcke",
+          "ja": "複数のリンクのブロック",
+          "fr": "Blocs de liens multiples"
+        },
+        "category": {
+          "pt-BR": "Imagem",
+          "it": "Immagine",
+          "en": "Image",
+          "es": "Imagen",
+          "de": "Foto",
+          "ja": "画像",
+          "fr": "Image"
+        },
+        "blocks": [
+          {
+            "type": "link_block"
+          },
+          {
+            "type": "link_block"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

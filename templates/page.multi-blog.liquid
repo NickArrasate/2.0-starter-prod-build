@@ -1,0 +1,23 @@
+
+<div class="page-width section-inner">
+    {% if section.settings.title != blank %}
+      <div class="section-block__header text-center">
+        <h2 class="section-block__title">{{ section.settings.title | escape }}</h2>
+      </div>
+    {% endif %}
+<nav>
+  <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-blog-tab" data-toggle="tab" href="#nav-blog" role="tab" aria-controls="nav-blog" aria-selected="true">OneDegree Blog</a>
+    <a class="nav-item nav-link" id="nav-video-tab" data-toggle="tab" href="#nav-video" role="tab" aria-controls="nav-video" aria-selected="false">OneDegree TV</a>
+  </div>
+</nav>
+<div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-blog" role="tabpanel" aria-labelledby="nav-blog-tab">
+    {% section 'static-blog-1' %}
+  </div>
+  <div class="tab-pane fade" id="nav-video" role="tabpanel" aria-labelledby="nav-video-tab">
+    {% section 'static-blog-2' %}
+  </div>
+</div>
+</div>
+

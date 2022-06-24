@@ -1,0 +1,143 @@
+
+<script
+  type="application/json"
+  data-section-type="static-blog"
+  data-section-id="{{ section.id }}">
+</script>
+
+{% assign featured_post = section.settings.featured_post %}
+{% assign paginate_by = section.settings.posts_per_page_range | times: 1 %}
+
+{% assign show_featured = false %}
+{% if featured_post != '' and featured_post != blank %}
+  {% assign show_featured = true %}
+
+  {% comment %}
+    Don't show highlighted post if is not first page, or if tags are active
+  {% endcomment %}
+  {% if paginate.current_page != 1 and current_tags != blank %}
+    {% assign show_featured = false %}
+  {% endif %}
+{% endif %}
+
+<section class="blog--container athletes">
+  <ul class="athlete-filter">
+    <li><h4><a class="active" onclick="blogSwitch('all')">Athletes</a></h4></li>
+    <li><h4><a class="" onclick="blogSwitch('ambassadors')">Ambassadors</a></h4></li>
+    <li><h4><a class="" onclick="blogSwitch('international')">International</a></h4></li>
+  </ul>
+<div class="row athlete-row athletes-all">
+  {% paginate blog.articles by paginate_by %}
+  {% for article in blog.articles reversed %}
+  {% unless article.tags contains 'Ambassador' or article.tags contains 'International' %}
+    <div class="col-6 col-sm-6 col-md-4 tm-box with-background no-pad">
+      <a href="{{article.url}}">
+        <div class=" tm-box-background" style="background-image: url('{{ article.image | img_url: '600x600' }}');">
+        </div>
+      </a>
+      <a class="tm-info-hover" href="{{article.url}}">
+        <div class="tm-info-hover-content text-center no-pad">
+          <strong class="text-center">{{article.title}}</strong>
+          <div class="tm-info-hover-content-inner">
+            <div class="text-center">{{article.role}}</div>
+            <small class="text-center">more</small>
+          </div>
+        </div>
+      </a>
+    </div>
+    {% endunless%}
+  {% endfor %}
+  {% render 'pagination' %}
+  {% endpaginate %}
+</div>
+
+<div class="row athlete-row athletes-ambassadors" style="display:none">
+  {% paginate blog.articles by paginate_by %}
+  {% for article in blog.articles reversed %}
+  {% if article.tags contains 'Ambassador' %}
+    <div class="col-6 col-sm-6 col-md-4 tm-box with-background no-pad">
+      <a href="{{article.url}}">
+        <div class=" tm-box-background" style="background-image: url('{{ article.image | img_url: '600x600' }}');">
+        </div>
+      </a>
+      <a class="tm-info-hover" href="{{article.url}}">
+        <div class="tm-info-hover-content text-center no-pad">
+          <strong class="text-center">{{article.title}}</strong>
+          <div class="tm-info-hover-content-inner">
+            <div class="text-center">{{article.role}}</div>
+            <small class="text-center">more</small>
+          </div>
+        </div>
+      </a>
+    </div>
+    {% endif%}
+  {% endfor %}
+  {% render 'pagination' %}
+  {% endpaginate %}
+</div>
+
+<div class="row athlete-row athletes-international" style="display:none">
+  {% paginate blog.articles by paginate_by %}
+  {% for article in blog.articles reversed %}
+  {% if article.tags contains 'International' %}
+    <div class="col-6 col-sm-6 col-md-4 tm-box with-background no-pad">
+      <a href="{{article.url}}">
+        <div class=" tm-box-background" style="background-image: url('{{ article.image | img_url: '600x600' }}');">
+        </div>
+      </a>
+      <a class="tm-info-hover" href="{{article.url}}">
+        <div class="tm-info-hover-content text-center no-pad">
+          <strong class="text-center">{{article.title}}</strong>
+          <div class="tm-info-hover-content-inner">
+            <div class="text-center">{{article.role}}</div>
+            <small class="text-center">more</small>
+          </div>
+        </div>
+      </a>
+    </div>
+    {% endif%}
+  {% endfor %}
+  {% render 'pagination' %}
+  {% endpaginate %}
+</div>
+</section>
+<script>
+var blogSwitch = function ( target ) {
+  $('.athlete-row').hide()
+  $('.athletes-' + target).fadeIn();
+}
+</script>
+{% schema %}
+{
+  "name": "Athlete pages",
+  "class": "blog--section athletes",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_excerpt",
+      "label": "Show post excerpt",
+      "default": true
+    },
+    {
+      "type": "article",
+      "id": "featured_post",
+      "label": "Featured post"
+    },
+    {
+      "type": "range",
+      "id": "posts_per_page_range",
+      "label": "Posts per page",
+      "min": 6,
+      "max": 99,
+      "step": 3,
+      "default": 36
+    },
+    {
+      "type": "image_picker",
+      "id": "fallback_image",
+      "label": "Article Fallback Image"
+    }
+  ]
+}
+
+{% endschema %}
