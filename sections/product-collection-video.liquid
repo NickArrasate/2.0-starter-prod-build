@@ -1,0 +1,152 @@
+<script
+  type="application/json"
+  data-section-type="dynamic-video"
+  data-section-id="{{ section.id }}"
+  data-section-data>
+  {
+    "autoplay": {{ section.settings.autoplay | json }}
+  }
+</script>
+<!-- check for collection -->
+{% if product.metafields["global"]["video_url"] %}
+{% assign videoUrl = product.metafields["global"]["video_url"]  %}
+{% else %}
+  {% for tag in product.tags %}
+    {% if tag contains 'collection-' %}
+      {% assign colArr = tag | remove: 'collection-' %}
+      {% assign collectionHandle = colArr | replace_first: '/', '-' %}
+      {% assign collection = collections[collectionHandle] %}
+    {% elsif tag contains '-collection' %}
+      {% assign collectionHandle = tag %}
+      {% assign collection = collections[collectionHandle] %}
+    {% endif %}
+  {% endfor %}
+    {% assign videoUrl = collection.metafields["global"]["video_url"] %}
+{% endif %}
+
+{% if collection.metafields["global"]["horizontal_bg"] != blank  %}
+  {% assign video_bg_image = collection.metafields["global"]["horizontal_bg"] %}
+  {% else %}
+  {% assign video_bg_image =  'video-bg-fallback.png' | asset_img_url: '1200x' %}
+{% endif %}
+
+{% if videoUrl != blank %}
+<div class="dynamic-video-wrapper"
+{% if video_bg_image and template != 'index' %}
+  style="background-image: url('{{ video_bg_image }}');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  "
+  {% endif %}
+>
+  {% if section.settings.title != blank %}
+    <h2 class="home-section--title">
+      {{ collection.title | escape }}
+    </h2>
+  {% endif %}
+
+  {% assign url = videoUrl | default: section.settings.url %}
+
+  <div class="dynamic-video">
+    {% assign overlay = null %}
+
+    {% if section.settings.show_overlay %}
+      {% assign opacity = section.settings.opacity | times: 0.01 %}
+      {% assign overlay = section.settings.background | color_modify: 'alpha', opacity %}
+    {% endif %}
+
+    {%
+      render 'video',
+      cover: section.settings.cover,
+      aspect_ratio: section.settings.aspect_ratio,
+      overlay: overlay,
+      url: url
+      %}
+  {% if section.settings.show_caption %}
+    <div class="dynamic-video-caption rte">{{ section.settings.caption }}</div>
+  {% endif %}
+  </div>
+</div>
+{% endif %}
+{% schema %}
+{
+  "name": "Video",
+  "class": "section-video",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Video"
+    },
+    {
+      "type": "header",
+      "content": "Video"
+    },
+    {
+      "type": "richtext",
+      "id": "url",
+      "label": "Fallback Video Link",
+      "default": "<p><br></p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay video"
+    },
+    {
+      "type": "image_picker",
+      "id": "cover",
+      "label": "Cover image (Homepage Only)"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Aspect ratio",
+      "options": [
+        {
+          "label": "16:9",
+          "value": "16-9"
+        },
+        {
+          "label": "21:9",
+          "value": "21-9"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_overlay",
+      "label": "Show overlay"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "opacity",
+      "label": "Opacity",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    }
+  ],
+  "presets": [
+    {
+      "category": "Video",
+      "name": "Video"
+    }
+  ]
+}
+
+{% endschema %}

@@ -1,0 +1,17 @@
+<article class="site-page" data-template-page>
+  {% section 'static-page-intro-meta' %}
+  {% section 'static-highlights-banners' %}
+
+  {% if page.content != blank %}
+    <div class="">
+      <div class="productgrid--outer">
+          <div class="shopify-section collection--section pt-0 pb-0">
+            {% render 'breadcrumbs' nopad:true %}
+            {{ page.content }}
+          </div>
+    </div>
+  </div>
+  {% endif %}
+  {% section 'static-collection-multi-block' %}
+  {% section 'product-ski-warranty' %}
+</article>

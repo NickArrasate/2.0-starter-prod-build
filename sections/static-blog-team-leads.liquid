@@ -1,0 +1,111 @@
+<script
+  type="application/json"
+  data-section-type="static-blog"
+  data-section-id="{{ section.id }}">
+</script>
+{% assign blog = blogs[section.settings.blog] %}
+{% assign featured_post = section.settings.featured_post %}
+{% assign paginate_by = section.settings.posts_per_page_range | times: 1 %}
+
+{% assign show_featured = false %}
+{% if featured_post != '' and featured_post != blank %}
+  {% assign show_featured = true %}
+
+  {% comment %}
+    Don't show highlighted post if is not first page, or if tags are active
+  {% endcomment %}
+  {% if paginate.current_page != 1 and current_tags != blank %}
+    {% assign show_featured = false %}
+  {% endif %}
+{% endif %}
+<section class="team-leads" id="team">
+  <a name="team"></a>
+  <header class="blog-title page-width">
+    <div class="collection--title emphasized-title-container">
+      <h1 class="section-header text-left emphasized-title">In-House Crew</h1>
+    </div>
+  </header>
+  {% paginate blog.articles by paginate_by %}
+    {% if show_featured %}
+      {%
+        render 'article-excerpt-featured',
+        article: articles[featured_post]
+      %}
+    {% endif %}
+
+    <ul class="blog--inner page-width">
+      {% for article in blog.articles %}
+        <div class="col-12 col-md-4 tm-box">
+          <a  class="tm-info-hover" href="{{article.url}}">
+            <img style="max-width: 100%" src="{{ article.image | img_url: '600x600' }}">
+            <div class="tm-info-hover-content">
+              <div class="text-center"><strong>{{article.title}}</strong></div>
+              <div class="tm-info-hover-content-inner">
+                <div class="text-center">{{ article.metafields["global"]["team_lead_title"] }}</div>
+              </div>
+            </div>
+          </a>
+        </div>
+      {% else %}
+        <article class="blog--no-results">
+          <h2 class="blog--no-results-title">
+            {{ 'blog.general.empty_blog' | t }}
+          </h2>
+        </article>
+      {% endfor %}
+    </ul>
+  {% endpaginate %}
+</section>
+
+{% schema %}
+{
+  "name": "Team Leads",
+  "class": "blog--section about-section-row team-leads",
+  "settings": [
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rss_link",
+      "label": "Show RSS link",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show date published",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show post author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpt",
+      "label": "Show post excerpt",
+      "default": true
+    },
+    {
+      "type": "article",
+      "id": "featured_post",
+      "label": "Featured post"
+    },
+    {
+      "type": "range",
+      "id": "posts_per_page_range",
+      "label": "Posts per page",
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "default": 9
+    }
+  ]
+}
+
+{% endschema %}

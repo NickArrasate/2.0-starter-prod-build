@@ -1,0 +1,50 @@
+{% assign descriptionArray = product.description | split: '<!--description-->' %}
+{% assign description = descriptionArray[1] %}
+
+
+{% assign materialsArray = product.description | split: '<!--materials-->' %}
+{% assign materials = materialsArray[1] %}
+
+{% assign shippingArray = product.description | split: '<!--shipping-info-->' %}
+{% assign shipping = shippingArray[1] %}
+
+{% assign storyArray = product.description | split: '<!--story-->' %}
+{% assign story = storyArray[1] %}
+
+{% render 'product-badges' %}
+
+{% unless product.description == blank or hide_description %}
+  <div class="product-description rte" data-product-description>
+    {{ description }}
+  </div>
+{% endunless %}
+<nav class="product-tabs">
+  <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+  {% if materials != '' %}
+    <a class="nav-item nav-link active" id="nav-materials-tab" data-toggle="tab" href="#nav-materials" role="tab" aria-controls="nav-materials" aria-selected="true">Materials</a>
+  {% endif %}
+  {% if shipping != '' %}
+    <a class="nav-item nav-link" id="nav-shipping-tab" data-toggle="tab" href="#nav-shipping" role="tab" aria-controls="nav-shipping" aria-selected="false">Shipping Info</a>
+  {% endif %}
+  {% if story != '' %}
+    <a class="nav-item nav-link" id="nav-story-tab" data-toggle="tab" href="#nav-story" role="tab" aria-controls="nav-story" aria-selected="false">Story</a>
+  {% endif %}
+  </div>
+</nav>
+<div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+{% if materials != '' %}
+  <div class="tab-pane fade show active" id="nav-materials" role="tabpanel" aria-labelledby="nav-materials-tab">
+    {{materials}}
+  </div>
+{% endif %}
+{% if shipping != '' %}
+  <div class="tab-pane fade" id="nav-shipping" role="tabpanel" aria-labelledby="nav-shipping">
+  {{shipping}}
+  </div>
+{% endif %}
+{% if story != '' %}
+  <div class="tab-pane fade" id="nav-story" role="tabpanel" aria-labelledby="nav-story">
+  {{story}}
+  </div>
+{% endif %}
+</div>

@@ -1,0 +1,156 @@
+<div class="page-width">
+  <div class="section-block section-block--padding">
+    {% if section.settings.title != blank %}
+      <div class="section-block__header text-center">
+        <h2 class="section-block__title">{{ section.settings.title | escape }}</h2>
+      </div>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="quotes-wrapper">
+        <div class="quotes-slider" id="Quotes-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="quotes">
+          {% for block in section.blocks %}
+            <div class="quote__slide-wrapper quote__slide-wrapper--{{ block.id }}" {{ block.shopify_attributes }}>
+              <div class="quote__slide text-center">
+                <div class="page-width">
+                  <div>
+                    <h5>{{ block.settings.question | escape }}</h5>
+                    <div class="rte-setting">{{ block.settings.quote }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+    {% if section.blocks.size == 0 %}
+      {% render 'no-blocks' %}
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": {
+      "en": "Main FAQ"
+    },
+    "class": "index-section",
+    "max_blocks": 5,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": {
+          "pt-BR": "Título",
+          "it": "Heading",
+          "en": "Heading",
+          "es": "Título",
+          "de": "Titel",
+          "ja": "見出し",
+          "fr": "Titre"
+        },
+        "default": {
+          "pt-BR": "Depoimentos",
+          "it": "Testimonial",
+          "en": "Testimonials",
+          "es": "Testimonios",
+          "de": "Testimonials",
+          "ja": "お客様の声",
+          "fr": "Témoignages"
+        }
+      }
+    ],
+    "blocks": [
+      {
+        "type": "quote",
+        "name": {
+          "pt-BR": "Citação",
+          "it": "Citazione",
+          "en": "Quote",
+          "es": "Cotización",
+          "de": "Zitat",
+          "ja": "引用",
+          "fr": "Citation"
+        },
+        "settings": [
+          {
+            "type": "text",
+            "id": "question",
+            "label": {
+              "pt-BR": "Autoria",
+              "it": "Autore",
+              "en": "Question",
+              "es": "Autor",
+              "de": "Autor",
+              "ja": "執筆者",
+              "fr": "Auteur"
+            },
+            "default": {
+              "pt-BR": "Nome do autor",
+              "it": "Nome dell'autore",
+              "en": "Question",
+              "es": "Nombre del autor",
+              "de": "Name des Autors",
+              "ja": "筆者の名前",
+              "fr": "Nom de l'auteur"
+            }
+          },
+          {
+            "type": "richtext",
+            "id": "quote",
+            "label": {
+              "pt-BR": "Texto",
+              "it": "Testo",
+              "en": "Text",
+              "es": "Texto",
+              "de": "Text",
+              "ja": "テキスト",
+              "fr": "Texte"
+            },
+            "default": {
+              "pt-BR": "<p>Adicione comentários e depoimentos de clientes para destacar os clientes felizes da sua loja.</p>",
+              "it": "<p>Aggiungi recensioni e testimonianze sul tuo negozio per dimostrare che i clienti sono soddisfatti.</p>",
+              "en": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+              "es": "<p>Agrega las reseñas y los testimonios de los clientes para mostrar a los clientes satisfechos de tu tienda.</p>",
+              "de": "<p>Kunden-Reviews und Testimonials, die Kundenzufriedenheit beweisen.</p>",
+              "ja": "<p>あなたのストアの幸せなお客様を紹介するために、カスタマーレビューとお客様の声を追加してください。</p>",
+              "fr": "<p>Ajoutez des avis et témoignages pour mettre en avant vos clients satisfaits.</p>"
+            }
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": {
+          "pt-BR": "Depoimentos",
+          "it": "Testimonial",
+          "en": "Testimonials",
+          "es": "Testimonios",
+          "de": "Testimonials",
+          "ja": "お客様の声",
+          "fr": "Témoignages"
+        },
+        "category": {
+          "pt-BR": "Texto",
+          "it": "Testo",
+          "en": "Text",
+          "es": "Texto",
+          "de": "Text",
+          "ja": "テキスト",
+          "fr": "Texte"
+        },
+        "blocks": [
+          {
+            "type": "quote"
+          },
+          {
+            "type": "quote"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

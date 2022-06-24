@@ -1,0 +1,248 @@
+<div class="page-width">
+  <div class="custom-content section-block">
+  {% for block in section.blocks %}
+    {% case block.settings.width %}
+      {% when '25%' %}
+        {%- assign block_width = 'small--one-whole one-quarter' -%}
+      {% when '33%' %}
+        {%- assign block_width = 'small--one-whole one-third' -%}
+      {% when '50%' %}
+        {%- assign block_width = 'small--one-whole one-half' -%}
+      {% when '66%' %}
+        {%- assign block_width = 'small--one-whole two-thirds' -%}
+      {% when '75%' %}
+        {%- assign block_width = 'small--one-whole three-quarters' -%}
+      {% when '100%' %}
+        {%- assign block_width = 'one-whole' -%}
+    {% endcase %}
+    <div class="section-block--padding grid__item {{ block_width }} {% if block.settings.alignment %}align--{{ block.settings.alignment }}{% endif %}" {{ block.shopify_attributes }}>
+      <div class="grid__item-inner grid__item-inner--{{ block.type }}">
+        <div class="rte">
+          {{ block.settings.code }}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": {
+      "pt-BR": "HTML personalizado",
+      "it": "HTML personalizzato",
+      "en": "Custom HTML",
+      "es": "HTML personalizado",
+      "de": "Benutzerdefiniertes HTML",
+      "ja": "HTMLをカスタムする",
+      "fr": "Code HTML personnalisé"
+    },
+    "class": "index-section",
+    "max_blocks": 9,
+    "blocks": [
+      {
+        "type": "html",
+        "name": {
+          "pt-BR": "HTML personalizado",
+          "it": "HTML personalizzato",
+          "en": "Custom HTML",
+          "es": "HTML personalizado",
+          "de": "Benutzerdefiniertes HTML",
+          "ja": "HTMLをカスタムする",
+          "fr": "Code HTML personnalisé"
+        },
+        "settings": [
+          {
+            "type": "html",
+            "id": "code",
+            "label": {
+              "pt-BR": "HTML",
+              "it": "HTML",
+              "en": "HTML",
+              "es": "HTML",
+              "de": "HTML",
+              "ja": "HTML",
+              "fr": "HTML"
+            },
+            "default": {
+              "pt-BR": "<div style='text-align:center;'><h2>Use HTML para formatar seu texto, assim ele pode ser lido com facilidade.</h2> Esse texto pode ser usado para compartilhar informações sobre sua marca com os clientes.</div>",
+              "it": "<div style='text-align:center;'><h2>Utilizza l'HTML per formattare il tuo testo così che sia facilmente leggibile.</h2>Questo testo può essere usato per condividere le informazioni sul tuo brand con i clienti.</div>",
+              "en": "<div style='text-align:center;'><h2>Use HTML to format your text so it can be easily read.</h2>This text can be used to share information about your brand with customers.</div>",
+              "es": "<div style='text-align:center;'><h2>Usa HTML para formatear tu texto para que se pueda leer fácilmente</h2>. Este texto se puede usar para compartir información sobre tu marca con los clientes.</div>",
+              "de": "<div style='text-align:center;'><h2>Formatieren Sie Ihren Text mit HTML, damit er leichter lesbar ist.</h2>Mit diesem Text können Sie Ihre Kunden über Ihre Marke informieren.</div>",
+              "ja": "<div style='text-align:center;'><h2>テキストが読みやすくなるように、HTMLを使用して書式設定します。</h2>このテキストは、あなたのブランドに関する情報をお客様と共有するために使用できます。</div>",
+              "fr": "<div style='text-align:center;'><h2>Utilisez le code HTML pour formater votre texte afin qu'il puisse être facilement lu.</h2>Vous pouvez utiliser ce texte pour partager des informations sur votre marque avec les clients.</div>"
+            }
+          },
+          {
+            "type": "select",
+            "id": "width",
+            "label": {
+              "pt-BR": "Largura do recipiente",
+              "it": "Larghezza contenitore",
+              "en": "Container width",
+              "es": "Ancho del contenedor",
+              "de": "Containerbreite",
+              "ja": "コンテナーの幅",
+              "fr": "Largeur du conteneur"
+            },
+            "default": "100%",
+            "options": [
+              {
+                "value": "25%",
+                "label": {
+                  "pt-BR": "25%",
+                  "it": "25%",
+                  "en": "25%",
+                  "es": "25%",
+                  "de": "25 %",
+                  "ja": "25%",
+                  "fr": "25 %"
+                }
+              },
+              {
+                "value": "33%",
+                "label": {
+                  "pt-BR": "33%",
+                  "it": "33%",
+                  "en": "33%",
+                  "es": "33%",
+                  "de": "33 %",
+                  "ja": "33%",
+                  "fr": "33 %"
+                }
+              },
+              {
+                "value": "50%",
+                "label": {
+                  "pt-BR": "50%",
+                  "it": "50%",
+                  "en": "50%",
+                  "es": "50%",
+                  "de": "50 %",
+                  "ja": "50%",
+                  "fr": "50 %"
+                }
+              },
+              {
+                "value": "66%",
+                "label": {
+                  "pt-BR": "66%",
+                  "it": "66%",
+                  "en": "66%",
+                  "es": "66%",
+                  "de": "66 %",
+                  "ja": "66%",
+                  "fr": "66 %"
+                }
+              },
+              {
+                "value": "75%",
+                "label": {
+                  "pt-BR": "75%",
+                  "it": "75%",
+                  "en": "75%",
+                  "es": "75%",
+                  "de": "75 %",
+                  "ja": "75%",
+                  "fr": "75 %"
+                }
+              },
+              {
+                "value": "100%",
+                "label": {
+                  "pt-BR": "100%",
+                  "it": "100%",
+                  "en": "100%",
+                  "es": "100%",
+                  "de": "100 %",
+                  "ja": "100%",
+                  "fr": "100 %"
+                }
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "alignment",
+            "label": {
+              "pt-BR": "Alinhamento vertical",
+              "it": "Allineamento verticale",
+              "en": "Vertical alignment",
+              "es": "Alineación vertical",
+              "de": "Vertikale Ausrichtung",
+              "ja": "垂直アラインメント",
+              "fr": "Alignement vertical"
+            },
+            "default": "top-middle",
+            "options": [
+              {
+                "value": "top-middle",
+                "label": {
+                  "pt-BR": "Acima",
+                  "it": "In alto",
+                  "en": "Top",
+                  "es": "Superior",
+                  "de": "Oben",
+                  "ja": "上",
+                  "fr": "En haut"
+                }
+              },
+              {
+                "value": "center",
+                "label": {
+                  "pt-BR": "Meio",
+                  "it": "Al centro",
+                  "en": "Middle",
+                  "es": "Al medio",
+                  "de": "Mittig",
+                  "ja": "中央",
+                  "fr": "Au milieu"
+                }
+              },
+              {
+                "value": "bottom-middle",
+                "label": {
+                  "pt-BR": "Abaixo",
+                  "it": "In basso",
+                  "en": "Bottom",
+                  "es": "Inferior",
+                  "de": "Unten",
+                  "ja": "下",
+                  "fr": "En bas"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": {
+          "pt-BR": "HTML personalizado",
+          "it": "HTML personalizzato",
+          "en": "Custom HTML",
+          "es": "HTML personalizado",
+          "de": "Benutzerdefiniertes HTML",
+          "ja": "HTMLをカスタムする",
+          "fr": "Code HTML personnalisé"
+        },
+        "category": {
+          "pt-BR": "Layout avançado",
+          "it": "Layout avanzato",
+          "en": "Advanced layout",
+          "es": "Diseño avanzado",
+          "de": "Komplizierteres Layout",
+          "ja": "高度なレイアウト",
+          "fr": "Mise en page avancée"
+        },
+        "blocks": [
+          {
+            "type": "html"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
