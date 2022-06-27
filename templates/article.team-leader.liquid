@@ -1,9 +1,0 @@
-{% comment %} {% section 'static-collection-intro-base' %} {% endcomment %}
-{% section 'static-article-team-lead' %}
-{% assign video = article.metafields["global"]["team_lead_video"] %}
-
-{% assign videoFallback = article.metafields["global"]["athlete_video"] %}
-{% if video != blank or videoFallback != blank %}
-{% section 'video-team-lead' %}
-{% endif %}
-{% section 'pagination-team-lead' %}

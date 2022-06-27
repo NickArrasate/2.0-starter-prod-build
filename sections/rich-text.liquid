@@ -1,162 +1,194 @@
-<div class="page-width">
-  <div class="section-block section-block--padding grid grid--no-gutters">
-    <div class="grid__item{% unless section.settings.home_page_full_width %} medium-up--two-thirds medium-up--push-one-sixth{% endunless %}">
-      {% if section.settings.section_title != blank %}
-        <h2 class="rich-text__heading--{{ section.settings.text_size }} text-center">{{ section.settings.section_title | escape }}</h2>
-      {% endif %}
-      {% if section.settings.text != blank %}
-        <div class="rte text-center rich-text__text--{{ section.settings.text_size }}">
-          {{ section.settings.text }}
-        </div>
-      {% endif %}
+<link rel="stylesheet" href="{{ 'component-rte.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'section-rich-text.css' | asset_url }}" media="print" onload="this.media='all'">
+
+<noscript>{{ 'component-rte.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'section-rich-text.css' | asset_url | stylesheet_tag }}</noscript>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="isolate{% unless section.settings.full_width %} page-width{% endunless %}">
+  <div class="rich-text content-container color-{{ section.settings.color_scheme }} gradient{% if section.settings.full_width %} rich-text--full-width content-container--full-width{% endif %} section-{{ section.id }}-padding">
+    <div class="rich-text__blocks">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'heading' -%}
+            <h2 class="{{ block.settings.heading_size }}" {{ block.shopify_attributes }}>{{ block.settings.heading | escape }}</h2>
+          {%- when 'text' -%}
+            <div class="rich-text__text rte" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+          {%- when 'button' -%}
+            <a{% if block.settings.button_link == blank %} role="link" aria-disabled="true"{% else %} href="{{ block.settings.button_link }}"{% endif %} class="button{% if block.settings.button_style_secondary %} button--secondary{% else %} button--primary{% endif %}" {{ block.shopify_attributes }}>
+              {{ block.settings.button_label | escape }}
+            </a>
+        {%- endcase -%}
+      {%- endfor -%}
     </div>
   </div>
 </div>
 
 {% schema %}
-  {
-    "name": {
-      "pt-BR": "Rich text",
-      "it": "Rich text",
-      "en": "Rich text",
-      "es": "Texto enriquecido",
-      "de": "Rich text",
-      "ja": "リッチテキスト",
-      "fr": "Texte enrichi"
+{
+  "name": "t:sections.rich-text.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "t:sections.all.colors.accent_1.label"
+        },
+        {
+          "value": "accent-2",
+          "label": "t:sections.all.colors.accent_2.label"
+        },
+        {
+          "value": "background-1",
+          "label": "t:sections.all.colors.background_1.label"
+        },
+        {
+          "value": "background-2",
+          "label": "t:sections.all.colors.background_2.label"
+        },
+        {
+          "value": "inverse",
+          "label": "t:sections.all.colors.inverse.label"
+        }
+      ],
+      "default": "background-1",
+      "label": "t:sections.all.colors.label"
     },
-    "class": "index-section",
-    "settings": [
-      {
-        "type": "checkbox",
-        "id": "home_page_full_width",
-        "label": {
-          "pt-BR": "Exibição ampla",
-          "it": "Visualizzazione ampia",
-          "en": "Wide display",
-          "es": "Pantalla ancha",
-          "de": "Breitbild-Display",
-          "ja": "ワイドディスプレイ",
-          "fr": "Affichage large"
-        }
-      },
-      {
-        "type": "text",
-        "id": "section_title",
-        "label": {
-          "pt-BR": "Título",
-          "it": "Heading",
-          "en": "Heading",
-          "es": "Título",
-          "de": "Titel",
-          "ja": "見出し",
-          "fr": "Titre"
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "default": true,
+      "label": "t:sections.rich-text.settings.full_width.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 52
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "t:sections.rich-text.blocks.heading.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Talk about your brand",
+          "label": "t:sections.rich-text.blocks.heading.settings.heading.label"
         },
-        "default": {
-          "pt-BR": "Fale sobre a sua marca",
-          "it": "Parla del tuo brand",
-          "en": "Talk about your brand",
-          "es": "Habla de tu marca",
-          "de": "Reden Sie über Ihre Marke",
-          "ja": "あなたのブランドについて語る",
-          "fr": "Parlez de votre marque"
-        }
-      },
-      {
-        "type": "richtext",
-        "id": "text",
-        "label": {
-          "pt-BR": "Texto",
-          "it": "Testo",
-          "en": "Text",
-          "es": "Texto",
-          "de": "Text",
-          "ja": "テキスト",
-          "fr": "Texte"
-        },
-        "default": {
-          "pt-BR": "<p>Use este texto para compartilhar informações sobre sua marca com seus clientes. Descreva um produto, compartilhe anúncios ou receba os clientes em sua loja.</p>",
-          "it": "<p>Utilizza questo testo per condividere le informazioni sul tuo brand con i tuoi clienti. Descrivi un prodotto, condividi gli annunci o dai il benvenuto ai clienti nel tuo negozio.</p>",
-          "en": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
-          "es": "<p>Usa este texto para compartir información sobre tu marca con tus clientes. Describe un producto, comparte anuncios o recibe clientes en tu tienda.</p>",
-          "de": "<p>Nutzen Sie diesen Text, um Infos über Ihre Marke mitzuteilen. Beschreiben Sie ein Produkt, kündigen Sie etwas an oder heißen Sie Kunden willkommen.</p>",
-          "ja": "<p>このテキストを使用して、あなたのブランドに関する情報をお客様と共有します。商品を説明したり、告知の共有をしたり、あるいはあなたのストアのお客様を歓迎します。</p>",
-          "fr": "<p>Utilisez ce texte pour partager des informations sur votre marque. Décrivez un produit, partagez des annonces, ou souhaitez la bienvenue à vos clients.</p>"
-        }
-      },
-      {
-        "type": "select",
-        "id": "text_size",
-        "label": {
-          "pt-BR": "Tamanho",
-          "it": "Misura",
-          "en": "Size",
-          "es": "Tamaño",
-          "de": "Größe",
-          "ja": "サイズ",
-          "fr": "Taille"
-        },
-        "default": "medium",
-        "options": [
-          {
-            "label": {
-              "pt-BR": "Pequeno",
-              "it": "Piccolo",
-              "en": "Small",
-              "es": "Pequeño",
-              "de": "Klein",
-              "ja": "小",
-              "fr": "Petite"
+        {
+          "type": "select",
+          "id": "heading_size",
+          "options": [
+            {
+              "value": "h2",
+              "label": "t:sections.all.heading_size.options__1.label"
             },
-            "value": "small"
-          },
-          {
-            "label": {
-              "pt-BR": "Médio",
-              "it": "Medio",
-              "en": "Medium",
-              "es": "Mediano",
-              "de": "Mittel",
-              "ja": "中",
-              "fr": "Moyenne"
+            {
+              "value": "h1",
+              "label": "t:sections.all.heading_size.options__2.label"
             },
-            "value": "medium"
-          },
-          {
-            "label": {
-              "pt-BR": "Grande",
-              "it": "Grande",
-              "en": "Large",
-              "es": "Grande",
-              "de": "Groß",
-              "ja": "大",
-              "fr": "Grande"
-            },
-            "value": "large"
-          }
-        ]
-      }
-    ],
-    "presets": [
-      {
-        "name": {
-          "pt-BR": "Rich text",
-          "it": "Rich text",
-          "en": "Rich text",
-          "es": "Texto enriquecido",
-          "de": "Rich text",
-          "ja": "リッチテキスト",
-          "fr": "Texte enrichi"
-        },
-        "category": {
-          "pt-BR": "Texto",
-          "it": "Testo",
-          "en": "Text",
-          "es": "Texto",
-          "de": "Text",
-          "ja": "テキスト",
-          "fr": "Texte"
+            {
+              "value": "h0",
+              "label": "t:sections.all.heading_size.options__3.label"
+            }
+          ],
+          "default": "h1",
+          "label": "t:sections.all.heading_size.label"
         }
-      }
-    ]
-  }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "t:sections.rich-text.blocks.text.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "default": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+          "label": "t:sections.rich-text.blocks.text.settings.text.label"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "t:sections.rich-text.blocks.button.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_label",
+          "default": "Button label",
+          "label": "t:sections.rich-text.blocks.button.settings.button_label.label"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "t:sections.rich-text.blocks.button.settings.button_link.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_style_secondary",
+          "default": false,
+          "label": "t:sections.rich-text.blocks.button.settings.button_style_secondary.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.rich-text.presets.name",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "text"
+        },
+        {
+          "type": "button"
+        }
+      ]
+    }
+  ]
+}
 {% endschema %}

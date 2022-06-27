@@ -1,10 +1,11 @@
 {
   "sections": {
     "main": {
-      "type": "static-list-collections",
+      "type": "main-list-collections",
       "settings": {
-        "thumbnail_columns_desktop": 4,
-        "thumbnail_columns_mobile": 3
+        "title": "Collections",
+        "sort": "alphabetical",
+        "image_ratio": "square"
       }
     }
   },
